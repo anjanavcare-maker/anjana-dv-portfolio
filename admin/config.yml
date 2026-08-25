@@ -1,12 +1,10 @@
-# Decap CMS configuration — Anjana DV portfolio
+# Sveltia CMS configuration (token login — no OAuth app needed) — Anjana DV portfolio
 # Login at https://anjana-dv-portfolio.vercel.app/admin/
 
 backend:
   name: github
   repo: anjanavcare-maker/anjana-dv-portfolio
   branch: main
-  auth_type: implicit
-  app_id: Ov23li6S4WWJVdS3nVAw   # ← replace with the OAuth App Client ID (no secret needed)
 
 media_folder: assets/uploads
 public_folder: assets/uploads
