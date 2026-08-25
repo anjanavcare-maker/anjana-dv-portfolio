@@ -8,8 +8,9 @@
   var ORIGIN = window.location.origin;
   var TOKEN_KEY = 'anjana_cm_token';
   var REPO = 'anjanavcare-maker/anjana-dv-portfolio';
-  var FILE = 'content/site.json';
-  var API = 'https://api.github.com/repos/' + REPO + '/contents/' + FILE;
+  var BASE = 'content/site.json';
+  var CONFIG_URL = '../' + BASE; // editor lives at /admin/ -> fetch from site root
+  var API = 'https://api.github.com/repos/' + REPO + '/contents/' + BASE;
 
   var json = null;
   var dirty = false;
@@ -424,7 +425,7 @@
   }, false);
 
   function loadAll() {
-    fetch(FILE + '?v=' + Date.now(), { cache: 'no-store' })
+    fetch(CONFIG_URL + '?v=' + Date.now(), { cache: 'no-store' })
       .then(function (r) {
         if (!r.ok) throw new Error('no content');
         return r.json();
