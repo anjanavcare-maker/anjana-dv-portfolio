@@ -1,14 +1,14 @@
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    ANJANA DV â€” Portfolio Â· V1
-   Design language: dark violet theme â€” violet + amber combo.
-   Palette: violet #E8920A primary, warm amber #F59E0B secondary,
+   Design language: warm amber theme â€” violet + amber combo.
+   Palette: amber #E8920A primary, warm amber #F59E0B secondary,
    deep violet-ink surfaces. (Darkened at client request.)
    Type pairing: Plus Jakarta Sans (display) + Inter (body) + JetBrains
    Mono (meta) â€” the exact pairing used on her most recent client site.
    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 :root {
-  /* surfaces â€” dark violet theme */
+  /* surfaces â€” warm amber theme */
   --bg:            #1B1308;
   --bg-deep:       #120C05;
   --surface:       rgba(255, 255, 255, 0.045);
