@@ -11,10 +11,11 @@
   var BASE = 'content/site.json';
   var CONFIG_URL = '../' + BASE; // editor lives at /admin/ -> fetch from site root
   var API = 'https://api.github.com/repos/' + REPO + '/contents/' + BASE;
+  var ADMIN_KEY = 'anjana-dv-admin-2026'; // shared with the serverless api/ routes (Vercel env)
 
   var json = null;
   var dirty = false;
-  var token = localStorage.getItem(TOKEN_KEY) || '';
+  var token = localStorage.getItem(TOKEN_KEY) || ''; // fallback only — serverless api is the primary path
   var overrides = {}; // image path -> local data URL (unsaved uploads shown instantly in preview)
   var pendingUpload = null; // upload waiting for the user to enter a token
 
@@ -130,11 +131,6 @@
     return wrap;
   }
   function uploadImage(path, file, done) {
-    if (!token) {
-      pendingUpload = { path: path, file: file, done: done }; // resume once the token is saved
-      openToken();
-      return;
-    }
     if (file.size > 5 * 1024 * 1024) { status('Image too large — max 5 MB', 'err'); return; }
     var name0 = slug(file.name);
     var reader = new FileReader();
@@ -147,10 +143,12 @@
     reader.readAsDataURL(file);
   }
   function doUpload(path, file, b64, dataUrl, name, done, retried) {
-    status('Uploading ' + name + ' to GitHub…');
-    var head = { Authorization: '***' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
-    var body = JSON.stringify({ message: 'Upload image ' + name, content: b64, branch: 'main' });
-    fetch('https://api.github.com/repos/' + REPO + '/contents/assets/uploads/' + name, { method: 'PUT', headers: head, body: body })
+    status('Uploading ' + name + '…');
+    fetch('../api/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': ADMIN_KEY },
+      body: JSON.stringify({ path: 'assets/uploads/' + name, content: b64, message: 'Upload image ' + name })
+    })
       .then(function (r) {
         if (r.ok) {
           setPath(json, path, 'assets/uploads/' + name);
@@ -162,10 +160,41 @@
           }
           status('\u2705 Uploaded — image will appear on the site after Save & Publish (preview shows it now)', 'ok');
           if (done) done();
+        } else if (r.status === 404) {
+          legacyUpload(path, file, b64, dataUrl, name, done, retried); // old deployment w/o serverless route
+        } else {
+          r.json().then(function (e) { status('Upload failed: ' + (((e && e.error) || (e && e.message)) || r.status), 'err'); }).catch(function () { status('Upload failed: HTTP ' + r.status, 'err'); });
+        }
+      })
+      .catch(function () { status('Upload network error', 'err'); });
+  }
+
+  function legacyUpload(path, file, b64, dataUrl, name, done, retried) {
+    if (!token) {
+      pendingUpload = { path: path, file: file, done: done };
+      status('Serverless upload unavailable — enter the token to continue', 'err');
+      openToken();
+      return;
+    }
+    status('Uploading ' + name + ' (direct)…');
+    var head = { Authorization: '***' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
+    var body = JSON.stringify({ message: 'Upload image ' + name, content: b64, branch: 'main' });
+    fetch('https://api.github.com/repos/' + REPO + '/contents/assets/uploads/' + name, { method: 'PUT', headers: head, body: body })
+      .then(function (r) {
+        if (r.ok) {
+          setPath(json, path, 'assets/uploads/' + name);
+          overrides[path] = dataUrl;
+          markDirty(); pushToFrame();
+          setTimeout(pushToFrame, 300);
+          if (path.indexOf('portrait') === 0 || path.indexOf('projects') === 0) {
+            loadPage('index.html');
+          }
+          status('\u2705 Uploaded — image will appear on the site after Save & Publish (preview shows it now)', 'ok');
+          if (done) done();
         } else if (r.status === 409 && !retried) {
-          doUpload(path, file, b64, dataUrl, slug(file.name, true), done, true);
+          legacyUpload(path, file, b64, dataUrl, slug(file.name, true), done, true);
         } else if (r.status === 401 || r.status === 403) {
-          pendingUpload = { path: path, file: file, done: done }; // resume after a corrected token
+          pendingUpload = { path: path, file: file, done: done };
           status('Token rejected — please re-enter it', 'err'); openToken();
         } else {
           r.json().then(function (e) { status('Upload failed: ' + (e.message || r.status), 'err'); }).catch(function () { status('Upload failed: HTTP ' + r.status, 'err'); });
@@ -438,6 +467,32 @@
 
   /* ---------------- publish ---------------- */
   function publish() {
+    status('Publishing to GitHub…');
+    fetch('../api/publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': ADMIN_KEY },
+      body: JSON.stringify({ content: b64(JSON.stringify(json, null, 2)), message: 'Content update from visual editor' })
+    })
+      .then(function (r) {
+        if (r.status === 404) return legacyPublish(); // old deployment w/o serverless route
+        if (!r.ok) return r.json().then(function (e) { throw new Error(((e && e.error) || (e && e.message)) || ('http ' + r.status)); });
+        return r.json();
+      })
+      .then(function () {
+        dirty = false;
+        $('dirty').hidden = true;
+        status('\u2705 Published — Vercel is deploying; live in ~1 minute', 'ok');
+        setTimeout(function () {
+          $('cms-frame').src = $('cms-frame').src.replace('?edit=1', '?v=' + Date.now());
+          status('\u2705 Live site updated', 'ok');
+        }, 70000);
+      })
+      .catch(function (e) {
+        status('Publish failed: ' + e.message, 'err');
+      });
+  }
+
+  function legacyPublish() {
     if (!token) { openToken(); return; }
     status('Publishing to GitHub…');
     var head = { Authorization: 'token ' + token, Accept: 'application/vnd.github+json' };
