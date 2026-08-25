@@ -165,6 +165,7 @@
         } else if (r.status === 409 && !retried) {
           doUpload(path, file, b64, dataUrl, slug(file.name, true), done, true);
         } else if (r.status === 401 || r.status === 403) {
+          pendingUpload = { path: path, file: file, done: done }; // resume after a corrected token
           status('Token rejected — please re-enter it', 'err'); openToken();
         } else {
           r.json().then(function (e) { status('Upload failed: ' + (e.message || r.status), 'err'); }).catch(function () { status('Upload failed: HTTP ' + r.status, 'err'); });
@@ -488,26 +489,19 @@
   function saveToken() {
     var v = $('token-input').value.trim();
     if (!v) return;
+    // Store + close + resume immediately — never let a slow/blocked check page deadlock the flow.
+    token = v;
+    localStorage.setItem(TOKEN_KEY, v);
+    $('token-overlay').hidden = true;
+    $('token-msg').textContent = '';
+    status('\u2705 Token saved — continuing…', 'ok');
+    var p = pendingUpload;
+    pendingUpload = null;
+    if (p) { uploadImage(p.path, p.file, p.done); }
+    // Background sanity check only (never blocks uploads).
     fetch('https://api.github.com/user', { headers: { Authorization: 'token ' + v } })
-      .then(function (r) {
-        if (r.ok) {
-          token = v;
-          localStorage.setItem(TOKEN_KEY, v);
-          $('token-overlay').hidden = true;
-          $('token-msg').textContent = '';
-          status('\u2705 Token saved — continuing your upload…', 'ok');
-          var p = pendingUpload;
-          pendingUpload = null;
-          if (p) { uploadImage(p.path, p.file, p.done); }
-        } else {
-          $('token-msg').className = 'msg err';
-          $('token-msg').textContent = 'GitHub rejected that token (' + r.status + '). Use a classic token with repo scope.';
-        }
-      })
-      .catch(function () {
-        $('token-msg').className = 'msg err';
-        $('token-msg').textContent = 'Network error while checking the token.';
-      });
+      .then(function (r) { if (!r.ok) status('Note: GitHub rejected that token (' + r.status + ') — uploads will fail.', 'err'); })
+      .catch(function () { /* keep going; the upload itself surfaces real errors */ });
   }
 
   /* ---------------- events ---------------- */
