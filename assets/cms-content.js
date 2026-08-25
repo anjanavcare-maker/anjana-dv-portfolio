@@ -126,10 +126,10 @@
       '<div class="card-links"><a class="card-link" href="' + esc(p.link) + '" target="_blank" rel="noopener">Visit site ' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a></div>';
     if (p.featured) {
-      return '<article class="work-card featured reveal" data-cats="' + esc(cats) + '"' + styleAttr + '>' +
+      return '<article class="work-card featured" data-cats="' + esc(cats) + '"' + styleAttr + '>' +
         mock + '<div class="card-side"><div class="card-tags">' + tags + '</div>' + info + '</div></article>';
     }
-    return '<article class="work-card reveal" data-cats="' + esc(cats) + '"' + styleAttr + '>' +
+    return '<article class="work-card" data-cats="' + esc(cats) + '"' + styleAttr + '>' +
       '<div class="card-top"><div class="card-tags">' + tags + '</div></div>' + mock +
       '<div class="card-info">' + info + '</div></article>';
   }
@@ -181,7 +181,7 @@
     var copy = q('.about-copy');
     if (copy && a.paragraphs) {
       copy.innerHTML = a.paragraphs.map(function (p, i) {
-        return '<p class="reveal" data-cms-path="about.paragraphs.' + i + '"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(p) + '</p>';
+        return '<p data-cms-path="about.paragraphs.' + i + '"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(p) + '</p>';
       }).join('');
     }
     var facts = q('.about-facts');
@@ -203,7 +203,7 @@
     if (grid && pr.tiers) {
       grid.innerHTML = pr.tiers.map(function (x, i) {
         var badge = x.badge ? '<span class="price-badge">' + esc(x.badge) + '</span>' : '';
-        return '<div class="price-card' + (x.featured ? ' featured' : '') + ' reveal">' + badge +
+        return '<div class="price-card' + (x.featured ? ' featured' : '') + '">' + badge +
           '<p class="price-tier" data-cms-path="pricing.tiers.' + i + '.tier"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(x.tier) + '</p>' +
           '<h3 class="price-name" data-cms-path="pricing.tiers.' + i + '.name"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(x.name) + '</h3>' +
           '<p class="price-amt"><span class="price-cur">' + esc(x.currency) + '</span>' + esc(x.amount) +
@@ -220,7 +220,7 @@
     var fl = q('.faq-list');
     if (fl && d.faq) {
       fl.innerHTML = d.faq.map(function (f, i) {
-        return '<details class="faq-item reveal"><summary data-cms-path="faq.' + i + '.q"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(f.q) + '</summary><p data-cms-path="faq.' + i + '.a"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(f.a) + '</p></details>';
+        return '<details class="faq-item"><summary data-cms-path="faq.' + i + '.q"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(f.q) + '</summary><p data-cms-path="faq.' + i + '.a"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(f.a) + '</p></details>';
       }).join('');
     }
   }
