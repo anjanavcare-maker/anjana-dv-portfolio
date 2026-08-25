@@ -10,6 +10,7 @@
 
   var DATA_URL = 'content/site.json';
   var IS_EDIT = /[?&]edit=1/.test(window.location.search);
+  var IMG = {}; // path -> data URL overrides pushed by the visual editor (unsaved uploads)
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -18,6 +19,9 @@
   function q(sel, root) { return (root || document).querySelector(sel); }
   function qa(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
 
+  function imgSrc(path, fallback) {
+    return IMG[path] || fallback || '';
+  }
   /* ---------- edit-mode plumbing ---------- */
   function mark(el, path, isHtml) {
     if (!IS_EDIT || !el) return;
@@ -42,7 +46,7 @@
       if (e.origin !== window.location.origin) return;
       var d = e.data;
       if (!d || d.type !== 'cms:apply') return;
-      apply(d.json, true);
+      apply(d.json, true, d.images || {});
     });
   }
 
@@ -79,7 +83,7 @@
     }
     var pi = q('.portrait-img');
     if (pi && d.portrait) {
-      if (d.portrait.image) pi.setAttribute('src', d.portrait.image);
+      if (d.portrait.image) pi.setAttribute('src', imgSrc('portrait.image', d.portrait.image));
       if (d.portrait.alt) pi.setAttribute('alt', d.portrait.alt);
       mark(pi, 'portrait.image');
     }
@@ -109,7 +113,7 @@
     var urlHost = '';
     try { urlHost = new URL(p.link).host; } catch (e) { urlHost = p.link.replace(/^https?:\/\//, '').split('/')[0]; }
     var shot = p.image
-      ? '<div class="mock-body mock-shot"><img class="shot" src="' + esc(p.image) + '" alt="" loading="lazy" width="1200" height="800" /></div>'
+      ? '<div class="mock-body mock-shot"><img class="shot" src="' + esc(imgSrc('projects.' + idx + '.image', p.image)) + '" alt="" loading="lazy" width="1200" height="800" /></div>'
       : '<div class="mock-body"></div>';
     var mock = '<div class="mock" aria-hidden="true"><div class="mock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mock-url">' + esc(urlHost) + '</span></div>' + shot + '</div>';
     var info = '<h3 class="card-name" data-cms-path="projects.' + idx + '.name"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(p.name) + '</h3>' +
@@ -216,7 +220,8 @@
     }
   }
 
-  function apply(d, force) {
+  function apply(d, force, images) {
+    IMG = images || {};
     if (q('.hero')) { applyHero(d, force); applyProjects(d, force); applyContact(d, force); }
     if (q('.about-grid')) applyAbout(d, force);
     if (q('.price-grid')) applyPricing(d, force);

@@ -15,6 +15,7 @@
   var json = null;
   var dirty = false;
   var token = localStorage.getItem(TOKEN_KEY) || '';
+  var overrides = {}; // image path -> local data URL (unsaved uploads shown instantly in preview)
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -65,7 +66,7 @@
   function pushToFrame() {
     var f = $('cms-frame');
     if (f && f.contentWindow && json) {
-      f.contentWindow.postMessage({ type: 'cms:apply', json: json }, ORIGIN);
+      f.contentWindow.postMessage({ type: 'cms:apply', json: json, images: overrides }, ORIGIN);
     }
   }
 
@@ -74,6 +75,93 @@
   function loadPage(page) {
     $('cms-frame').src = PAGES[page] || PAGES['index.html'];
     document.querySelectorAll('.pv-btn').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-page') === page); });
+  }
+
+  /* ---------------- image fields + upload ---------------- */
+  function slug(name, stamp) {
+    var parts = String(name || '').toLowerCase().split('.');
+    var ext = parts.length > 1 ? '.' + parts.pop() : '.jpg';
+    var base = parts.join('.').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'image';
+    if (stamp) base = base + '-' + Date.now();
+    return base + ext;
+  }
+  function buildImageField(cfg) {
+    var wrap = document.createElement('div');
+    wrap.className = 'field';
+    var lab = document.createElement('label');
+    lab.textContent = cfg.label || cfg.path;
+    wrap.appendChild(lab);
+    var row = document.createElement('div');
+    row.className = 'imgrow';
+    var thumb = document.createElement('img');
+    thumb.className = 'thumb'; thumb.alt = '';
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.value = getPath(json, cfg.path) || '';
+    input.setAttribute('data-path', cfg.path);
+    input.setAttribute('placeholder', 'path or URL');
+    input.addEventListener('input', function () {
+      setPath(json, cfg.path, input.value.trim());
+      markDirty(); pushToFrame(); refresh();
+    });
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'lr-add btn-upload'; btn.textContent = '+ Upload image';
+    btn.title = 'Choose a photo from this device (PNG/JPG/WebP, max 5 MB)';
+    var file = document.createElement('input');
+    file.type = 'file'; file.accept = 'image/png,image/jpeg,image/webp,image/gif'; file.style.display = 'none';
+    btn.addEventListener('click', function () { file.click(); });
+    file.addEventListener('change', function () {
+      if (file.files && file.files[0]) uploadImage(cfg.path, file.files[0], refresh);
+      file.value = '';
+    });
+    row.appendChild(thumb); row.appendChild(input);
+    wrap.appendChild(row);
+    wrap.appendChild(btn);
+    wrap.appendChild(file);
+    function refresh() {
+      var v = getPath(json, cfg.path);
+      var src = overrides[cfg.path] || v || '';
+      thumb.src = src;
+      thumb.style.display = src ? 'inline-block' : 'none';
+      thumb.title = v || '';
+    }
+    refresh();
+    return wrap;
+  }
+  function uploadImage(path, file, done) {
+    if (!token) { openToken(); return; }
+    if (file.size > 5 * 1024 * 1024) { status('Image too large — max 5 MB', 'err'); return; }
+    var name0 = slug(file.name);
+    var reader = new FileReader();
+    reader.onload = function () {
+      var dataUrl = String(reader.result);
+      var b64 = dataUrl.split(',')[1];
+      doUpload(path, file, b64, dataUrl, name0, done);
+    };
+    reader.onerror = function () { status('Could not read the file', 'err'); };
+    reader.readAsDataURL(file);
+  }
+  function doUpload(path, file, b64, dataUrl, name, done, retried) {
+    status('Uploading ' + name + ' to GitHub…');
+    var head = { Authorization: '***' + token, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' };
+    var body = JSON.stringify({ message: 'Upload image ' + name, content: b64, branch: 'main' });
+    fetch('https://api.github.com/repos/' + REPO + '/contents/assets/uploads/' + name, { method: 'PUT', headers: head, body: body })
+      .then(function (r) {
+        if (r.ok) {
+          setPath(json, path, 'assets/uploads/' + name);
+          overrides[path] = dataUrl;
+          markDirty(); pushToFrame();
+          status('\u2705 Uploaded — image will appear on the site after Save & Publish (preview shows it now)', 'ok');
+          if (done) done();
+        } else if (r.status === 409 && !retried) {
+          doUpload(path, file, b64, dataUrl, slug(file.name, true), done, true);
+        } else if (r.status === 401 || r.status === 403) {
+          status('Token rejected — please re-enter it', 'err'); openToken();
+        } else {
+          r.json().then(function (e) { status('Upload failed: ' + (e.message || r.status), 'err'); }).catch(function () { status('Upload failed: HTTP ' + r.status, 'err'); });
+        }
+      })
+      .catch(function () { status('Upload network error', 'err'); });
   }
 
   /* ---------------- form widgets ---------------- */
@@ -100,6 +188,8 @@
         setPath(json, cfg.path, input.value);
         markDirty(); pushToFrame();
       });
+    } else if (cfg.type === 'image') {
+      return buildImageField(cfg);
     } else {
       input = document.createElement('input');
       input.type = cfg.type === 'url' ? 'text' : 'text';
@@ -232,7 +322,7 @@
     // Portrait
     root.appendChild(section('Portrait photo', (function () {
       var b = document.createElement('div');
-      b.appendChild(makeField({ path: 'portrait.image', label: 'Image path (assets/…  or full URL)', type: 'text' }));
+      b.appendChild(makeField({ path: 'portrait.image', label: 'Portrait photo', type: 'image' }));
       b.appendChild(makeField({ path: 'portrait.alt', label: 'Alt text', type: 'text' }));
       b.appendChild(makeField({ path: 'portrait.tagLeft', label: 'Tag left', type: 'text' }));
       b.appendChild(makeField({ path: 'portrait.tagRight', label: 'Tag right', type: 'text' }));
@@ -257,7 +347,7 @@
         { path: 'name', label: 'Client / project name', type: 'text' },
         { path: 'desc', label: 'Description', type: 'area' },
         { path: 'link', label: 'Website URL', type: 'text' },
-        { path: 'image', label: 'Screenshot path (assets/thumbs/… .jpg)', type: 'text' },
+        { path: 'image', label: 'Screenshot', type: 'image' },
         { path: 'tags', label: 'Card tags — text or "text (live)" (comma separated)', type: 'commaTags' },
         { path: 'cats', label: 'Categories (comma: live kerala uae finance …)', type: 'comma' },
         { path: 'colors.bg', label: 'Brand bg (--mbg, optional)', type: 'text' },

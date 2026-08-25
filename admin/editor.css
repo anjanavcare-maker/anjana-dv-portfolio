@@ -79,6 +79,12 @@ h3.sec { margin: 18px 0 8px; font-size: 14px; text-transform: uppercase; letter-
 .token-card .msg { min-height: 18px; }
 .msg.ok { color: var(--ok); } .msg.err { color: var(--err); }
 
+/* image fields */
+.imgrow { display: flex; gap: 8px; align-items: center; }
+.imgrow input { flex: 1; }
+.thumb { width: 58px; height: 42px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); background: #000; flex: none; }
+.btn-upload { margin-top: 6px; }
+
 /* editable elements inside the preview iframe */
 .cms-editable { outline: 1px dashed rgba(232, 146, 10, 0.55); outline-offset: 2px; cursor: text; border-radius: 2px; }
 .cms-editable:hover { outline-color: var(--accent); background: rgba(232, 146, 10, 0.06); }
