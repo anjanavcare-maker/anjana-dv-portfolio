@@ -1,0 +1,20 @@
+# Anjana DV Portfolio — GitHub Pages mirror
+# This repo is managed automatically by the agent (sync-up.ps1 / sync-down.ps1).
+# It mirrors: projects/website-e8f33854c5eaaf04a6a0dbe2/
+#
+# How updates flow:
+#   Chat edit (main folder)  ->  sync-up.ps1  ->  push to GitHub  ->  Pages live
+#   Manual edit on GitHub    ->  sync-down.ps1 (or agent pull)    ->  local + preview synced
+# Do NOT edit files in this folder directly — it is overwritten on every sync.
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+
+# stray test artifacts (kept out of the deploy)
+assets/thumbs/kick.png
+assets/thumbs/test_mshots.png
+assets/thumbs/test_thumio.png
+assets/thumbs/*_test.png
