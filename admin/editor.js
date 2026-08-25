@@ -16,6 +16,7 @@
   var dirty = false;
   var token = localStorage.getItem(TOKEN_KEY) || '';
   var overrides = {}; // image path -> local data URL (unsaved uploads shown instantly in preview)
+  var pendingUpload = null; // upload waiting for the user to enter a token
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -129,7 +130,11 @@
     return wrap;
   }
   function uploadImage(path, file, done) {
-    if (!token) { openToken(); return; }
+    if (!token) {
+      pendingUpload = { path: path, file: file, done: done }; // resume once the token is saved
+      openToken();
+      return;
+    }
     if (file.size > 5 * 1024 * 1024) { status('Image too large — max 5 MB', 'err'); return; }
     var name0 = slug(file.name);
     var reader = new FileReader();
@@ -476,6 +481,7 @@
 
   /* ---------------- token overlay ---------------- */
   function openToken() {
+    $('token-msg').textContent = ''; // clear stale errors
     $('token-overlay').hidden = false;
     $('token-input').focus();
   }
@@ -489,7 +495,10 @@
           localStorage.setItem(TOKEN_KEY, v);
           $('token-overlay').hidden = true;
           $('token-msg').textContent = '';
-          status('\u2705 Token saved (' + r.status + ')', 'ok');
+          status('\u2705 Token saved — continuing your upload…', 'ok');
+          var p = pendingUpload;
+          pendingUpload = null;
+          if (p) { uploadImage(p.path, p.file, p.done); }
         } else {
           $('token-msg').className = 'msg err';
           $('token-msg').textContent = 'GitHub rejected that token (' + r.status + '). Use a classic token with repo scope.';
