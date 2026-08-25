@@ -1,10 +1,15 @@
 /* cms-content.js — applies content/site.json edits to the live pages.
- * Works alongside the Decap CMS admin panel (admin/index.html).
- * If site.json is missing/unreachable, the original markup stays untouched. */
+ * Two modes:
+ *  - normal:  fills the page from content/site.json (fallback: keep static markup)
+ *  - ?edit=1: additionally makes every editable element contenteditable,
+ *             marks it with data-cms-path, and talks to the parent window
+ *             (the visual editor at /admin/) so edits flow back into the JSON.
+ */
 (function () {
   'use strict';
 
   var DATA_URL = 'content/site.json';
+  var IS_EDIT = /[?&]edit=1/.test(window.location.search);
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -13,14 +18,49 @@
   function q(sel, root) { return (root || document).querySelector(sel); }
   function qa(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
 
-  function applyHero(d) {
+  /* ---------- edit-mode plumbing ---------- */
+  function mark(el, path, isHtml) {
+    if (!IS_EDIT || !el) return;
+    el.setAttribute('data-cms-path', path);
+    if (isHtml) el.setAttribute('data-cms-html', '1');
+    el.setAttribute('contenteditable', 'true');
+    el.setAttribute('data-cms-edit', 'true');
+    el.classList.add('cms-editable');
+  }
+  function listenEdits() {
+    if (!IS_EDIT) return;
+    document.addEventListener('blur', function (e) {
+      var t = e.target;
+      if (!t || !t.getAttribute || !t.getAttribute('data-cms-path')) return;
+      var path = t.getAttribute('data-cms-path');
+      var value = t.getAttribute('data-cms-html') ? t.innerHTML : t.textContent;
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'cms:change', path: path, value: value, html: !!t.getAttribute('data-cms-html') }, window.location.origin);
+      }
+    }, true);
+    window.addEventListener('message', function (e) {
+      if (e.origin !== window.location.origin) return;
+      var d = e.data;
+      if (!d || d.type !== 'cms:apply') return;
+      apply(d.json, true);
+    });
+  }
+
+  /* ---------- all applies take (d, force) — force re-renders in edit mode ---------- */
+  function applyHero(d, force) {
     var hero = d.hero;
-    if (q('.hero h1')) q('.hero h1').innerHTML = hero.title || '';
-    if (q('.hero .lead')) q('.hero .lead').innerHTML = hero.lead || '';
+    var h1 = q('.hero h1');
+    if (h1 && (hero.title || force)) { h1.innerHTML = hero.title || ''; mark(h1, 'hero.title', true); }
+    var lead = q('.hero .lead');
+    if (lead && (hero.lead || force)) { lead.innerHTML = hero.lead || ''; mark(lead, 'hero.lead', true); }
     var avail = q('.avail-chip');
-    if (avail) avail.innerHTML = '<span class="avail-dot" aria-hidden="true"></span> ' + esc(hero.availability);
+    if (avail && hero.availability) { avail.innerHTML = '<span class="avail-dot" aria-hidden="true"></span> ' + esc(hero.availability); mark(avail, 'hero.availability'); }
     var chips = q('.hero-chips');
-    if (chips && hero.chips) chips.innerHTML = hero.chips.map(function (c) { return '<span class="hero-chip">' + esc(c) + '</span>'; }).join('');
+    if (chips && hero.chips) {
+      chips.innerHTML = hero.chips.map(function (c, i) {
+        return '<span class="hero-chip" data-cms-path="hero.chips.' + i + '"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(c) + '</span>';
+      }).join('');
+    }
     var p = q('.hero-cta .btn-primary');
     if (p && hero.cta && hero.cta.primary) {
       p.setAttribute('href', hero.cta.primary.href || '#work');
@@ -32,27 +72,30 @@
       s.textContent = hero.cta.secondary.text;
     }
     var st = q('.hero-stats');
-    if (st && hero.stats) st.innerHTML = hero.stats.map(function (x) {
-      return '<div class="stat"><div class="stat-num">' + esc(x.num) + '</div><p class="stat-label">' + esc(x.label) + '</p></div>';
-    }).join('');
+    if (st && hero.stats) {
+      st.innerHTML = hero.stats.map(function (x, i) {
+        return '<div class="stat"><div class="stat-num" data-cms-path="hero.stats.' + i + '.num"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(x.num) + '</div><p class="stat-label" data-cms-path="hero.stats.' + i + '.label"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(x.label) + '</p></div>';
+      }).join('');
+    }
     var pi = q('.portrait-img');
     if (pi && d.portrait) {
       if (d.portrait.image) pi.setAttribute('src', d.portrait.image);
       if (d.portrait.alt) pi.setAttribute('alt', d.portrait.alt);
+      mark(pi, 'portrait.image');
     }
     var pt = q('.portrait-tag');
     if (pt && d.portrait) {
-      pt.innerHTML = '<span>' + esc(d.portrait.tagLeft) + '</span><span>' + esc(d.portrait.tagRight) + '</span>';
+      pt.innerHTML = '<span data-cms-path="portrait.tagLeft"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(d.portrait.tagLeft) + '</span><span data-cms-path="portrait.tagRight"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(d.portrait.tagRight) + '</span>';
     }
     var wh = { eyebrow: q('#work .eyebrow'), title: q('#work .sec-title'), sub: q('#work .sec-sub') };
     if (d.work) {
-      if (wh.eyebrow) wh.eyebrow.textContent = d.work.eyebrow;
-      if (wh.title) wh.title.innerHTML = d.work.title;
-      if (wh.sub) wh.sub.textContent = d.work.sub;
+      if (wh.eyebrow && d.work.eyebrow) { wh.eyebrow.textContent = d.work.eyebrow; mark(wh.eyebrow, 'work.eyebrow'); }
+      if (wh.title && d.work.title) { wh.title.innerHTML = d.work.title; mark(wh.title, 'work.title', true); }
+      if (wh.sub && d.work.sub) { wh.sub.textContent = d.work.sub; mark(wh.sub, 'work.sub'); }
     }
   }
 
-  function cardMarkup(p) {
+  function cardMarkup(p, idx) {
     var style = [];
     if (p.colors && p.colors.bg) style.push('--mbg:' + p.colors.bg);
     if (p.colors && p.colors.fg) style.push('--mfg:' + p.colors.fg);
@@ -69,7 +112,8 @@
       ? '<div class="mock-body mock-shot"><img class="shot" src="' + esc(p.image) + '" alt="" loading="lazy" width="1200" height="800" /></div>'
       : '<div class="mock-body"></div>';
     var mock = '<div class="mock" aria-hidden="true"><div class="mock-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mock-url">' + esc(urlHost) + '</span></div>' + shot + '</div>';
-    var info = '<h3 class="card-name">' + esc(p.name) + '</h3><p class="card-desc">' + esc(p.desc) + '</p>' +
+    var info = '<h3 class="card-name" data-cms-path="projects.' + idx + '.name"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(p.name) + '</h3>' +
+      '<p class="card-desc" data-cms-path="projects.' + idx + '.desc"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(p.desc) + '</p>' +
       '<div class="card-links"><a class="card-link" href="' + esc(p.link) + '" target="_blank" rel="noopener">Visit site ' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a></div>';
     if (p.featured) {
@@ -87,23 +131,23 @@
     return t.content.firstChild;
   }
 
-  function applyProjects(d) {
+  function applyProjects(d, force) {
     var grid = q('.work-grid');
     if (!grid || !d.projects) return;
     var cta = grid.querySelector('.cta-card');
     qa('.work-card:not(.cta-card)', grid).forEach(function (card) { card.remove(); });
     var frag = document.createDocumentFragment();
-    d.projects.forEach(function (p) { frag.appendChild(domify(cardMarkup(p))); });
+    d.projects.forEach(function (p, i) { frag.appendChild(domify(cardMarkup(p, i))); });
     if (cta) { cta.parentNode.insertBefore(frag, cta); } else { grid.appendChild(frag); }
   }
 
-  function applyContact(d) {
+  function applyContact(d, force) {
     var c = d.contact;
     if (!c) return;
     var t = q('#contact .sec-title');
-    if (t && c.title) t.textContent = c.title;
+    if (t && c.title) { t.textContent = c.title; mark(t, 'contact.title'); }
     var sb = q('#contact .sec-sub');
-    if (sb && c.sub) sb.textContent = c.sub;
+    if (sb && c.sub) { sb.textContent = c.sub; mark(sb, 'contact.sub'); }
     qa('#contact .method').forEach(function (m) {
       var k = q('.method-k', m);
       if (!k) return;
@@ -111,65 +155,79 @@
       var v = q('.method-v', m);
       var note = q('.method-note', m);
       var val = c[key];
-      if (v && val) v.textContent = val;
+      if (v) {
+        if (val) { v.textContent = val; mark(v, 'contact.' + key); }
+        v.setAttribute('data-cms-path', 'contact.' + key);
+        if (IS_EDIT) v.setAttribute('contenteditable', 'true');
+      }
       if (note) note.textContent = '';
     });
   }
 
-  function applyAbout(d) {
+  function applyAbout(d, force) {
     var a = d.about;
     if (!a) return;
     var t = q('.about-sticky .sec-title');
-    if (t && a.title) t.innerHTML = a.title;
+    if (t && a.title) { t.innerHTML = a.title; mark(t, 'about.title', true); }
     var copy = q('.about-copy');
-    if (copy && a.paragraphs) copy.innerHTML = a.paragraphs.map(function (p) {
-      return '<p class="reveal">' + esc(p) + '</p>';
-    }).join('');
+    if (copy && a.paragraphs) {
+      copy.innerHTML = a.paragraphs.map(function (p, i) {
+        return '<p class="reveal" data-cms-path="about.paragraphs.' + i + '"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(p) + '</p>';
+      }).join('');
+    }
     var facts = q('.about-facts');
-    if (facts && a.facts) facts.innerHTML = a.facts.map(function (f) {
-      return '<div class="fact"><p class="fact-k">' + esc(f[0]) + '</p><p class="fact-v">' + esc(f[1]) + '</p></div>';
-    }).join('');
+    if (facts && a.facts) {
+      facts.innerHTML = a.facts.map(function (f, i) {
+        return '<div class="fact"><p class="fact-k" data-cms-path="about.facts.' + i + '.0"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(f[0]) + '</p><p class="fact-v" data-cms-path="about.facts.' + i + '.1"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(f[1]) + '</p></div>';
+      }).join('');
+    }
   }
 
-  function applyPricing(d) {
+  function applyPricing(d, force) {
     var pr = d.pricing;
     if (!pr) return;
     var t = q('#pricing .sec-title') || q('#pricing h1');
-    if (t && pr.title) t.innerHTML = pr.title;
+    if (t && pr.title) { t.innerHTML = pr.title; mark(t, 'pricing.title', true); }
     var sb = q('#pricing .sec-sub');
-    if (sb && pr.sub) sb.textContent = pr.sub;
+    if (sb && pr.sub) { sb.textContent = pr.sub; mark(sb, 'pricing.sub'); }
     var grid = q('.price-grid');
     if (grid && pr.tiers) {
-      grid.innerHTML = pr.tiers.map(function (x) {
+      grid.innerHTML = pr.tiers.map(function (x, i) {
         var badge = x.badge ? '<span class="price-badge">' + esc(x.badge) + '</span>' : '';
         return '<div class="price-card' + (x.featured ? ' featured' : '') + ' reveal">' + badge +
-          '<p class="price-tier">' + esc(x.tier) + '</p><h3 class="price-name">' + esc(x.name) + '</h3>' +
+          '<p class="price-tier" data-cms-path="pricing.tiers.' + i + '.tier"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(x.tier) + '</p>' +
+          '<h3 class="price-name" data-cms-path="pricing.tiers.' + i + '.name"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(x.name) + '</h3>' +
           '<p class="price-amt"><span class="price-cur">' + esc(x.currency) + '</span>' + esc(x.amount) +
           '<span class="price-from"> ' + esc(x.from) + '</span></p>' +
-          '<p class="price-desc">' + esc(x.desc) + '</p>' +
-          '<ul class="price-feats">' + (x.features || []).map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>' +
+          '<p class="price-desc" data-cms-path="pricing.tiers.' + i + '.desc"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(x.desc) + '</p>' +
+          '<ul class="price-feats">' + (x.features || []).map(function (f, j) {
+            return '<li data-cms-path="pricing.tiers.' + i + '.features.' + j + '"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(f) + '</li>';
+          }).join('') + '</ul>' +
           '<a class="btn ' + (x.featured ? 'btn-primary' : 'btn-secondary') + '" href="#contact">' + esc(x.cta) + '</a></div>';
       }).join('');
     }
     var note = q('.price-note');
-    if (note && pr.note) note.innerHTML = pr.note.replace(/^Fast delivery:/, '<strong>Fast delivery:</strong>');
+    if (note && pr.note) { note.innerHTML = pr.note.replace(/^Fast delivery:/, '<strong>Fast delivery:</strong>'); mark(note, 'pricing.note'); }
     var fl = q('.faq-list');
-    if (fl && d.faq) fl.innerHTML = d.faq.map(function (f) {
-      return '<details class="faq-item reveal"><summary>' + esc(f.q) + '</summary><p>' + esc(f.a) + '</p></details>';
-    }).join('');
+    if (fl && d.faq) {
+      fl.innerHTML = d.faq.map(function (f, i) {
+        return '<details class="faq-item reveal"><summary data-cms-path="faq.' + i + '.q"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(f.q) + '</summary><p data-cms-path="faq.' + i + '.a"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(f.a) + '</p></details>';
+      }).join('');
+    }
   }
 
-  function apply(d) {
-    if (q('.hero')) { applyHero(d); applyProjects(d); applyContact(d); }
-    if (q('.about-grid')) applyAbout(d);
-    if (q('.price-grid')) applyPricing(d);
+  function apply(d, force) {
+    if (q('.hero')) { applyHero(d, force); applyProjects(d, force); applyContact(d, force); }
+    if (q('.about-grid')) applyAbout(d, force);
+    if (q('.price-grid')) applyPricing(d, force);
+    if (IS_EDIT) document.body.classList.add('cms-edit-mode');
   }
 
   function boot() {
     fetch(DATA_URL + '?v=' + Date.now(), { cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw new Error('no content'); return r.json(); })
-      .then(apply)
-      .catch(function () { /* keep the static markup when content is unavailable */ });
+      .then(function (json) { apply(json, false); listenEdits(); })
+      .catch(function () { listenEdits(); /* keep the static markup when no content */ });
   }
 
   if (document.readyState === 'loading') {

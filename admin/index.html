@@ -3,14 +3,57 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager — Anjana DV</title>
-  <style>
-    html, body { margin: 0; height: 100%; background: #1B1308; }
-    body { display: grid; place-items: center; color: #FBF3E3; font-family: 'Segoe UI', system-ui, sans-serif; }
-  </style>
+  <title>Visual Editor — Anjana DV</title>
+  <link rel="stylesheet" href="editor.css" />
 </head>
 <body>
-  <div>Loading editor…</div>
-  <script src="sveltia-cms.js"></script>
+  <header id="topbar">
+    <div class="brand">
+      <img src="../assets/logo-anjana-transparent.png" alt="" width="30" height="30" />
+      <div>
+        <strong>Anjana DV</strong>
+        <span class="sub">Visual Editor</span>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="pv-btn active" data-page="index.html">Home</button>
+      <button class="pv-btn" data-page="about.html">About</button>
+      <button class="pv-btn" data-page="pricing.html">Pricing</button>
+    </div>
+    <div class="actions">
+      <span id="dirty" class="dirty" hidden>● unsaved</span>
+      <button id="btn-token" class="btn ghost">Token</button>
+      <button id="btn-reset" class="btn ghost" title="Reload from GitHub">Reset</button>
+      <button id="btn-publish" class="btn primary">Save &amp; Publish</button>
+    </div>
+  </header>
+
+  <div id="statusbar">
+    <span id="status">Loading content…</span>
+  </div>
+
+  <main id="split">
+    <aside id="panel">
+      <div id="fields"></div>
+    </aside>
+    <section id="preview">
+      <iframe id="cms-frame" title="Live preview"></iframe>
+    </section>
+  </main>
+
+  <div id="token-overlay" hidden>
+    <div class="token-card">
+      <h2>GitHub access token</h2>
+      <p>Paste a GitHub personal access token (classic, with <code>repo</code> scope). It is stored only in this browser.</p>
+      <input id="token-input" type="password" placeholder="ghp_…" autocomplete="off" />
+      <div class="row">
+        <button id="btn-token-save" class="btn primary">Save token</button>
+        <button id="btn-token-cancel" class="btn ghost">Cancel</button>
+      </div>
+      <p id="token-msg" class="msg"></p>
+    </div>
+  </div>
+
+  <script src="editor.js"></script>
 </body>
 </html>
