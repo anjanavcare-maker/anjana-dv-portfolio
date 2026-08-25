@@ -1,0 +1,162 @@
+# Decap CMS configuration — Anjana DV portfolio
+# Login at https://anjana-dv-portfolio.vercel.app/admin/
+
+backend:
+  name: github
+  repo: anjanavcare-maker/anjana-dv-portfolio
+  branch: main
+  auth_type: implicit
+  app_id: YOUR_GITHUB_OAUTH_CLIENT_ID   # ← replace with the OAuth App Client ID (no secret needed)
+
+media_folder: assets/uploads
+public_folder: assets/uploads
+
+locale: en
+
+collections:
+  - name: content
+    label: Site Content
+    format: json
+    files:
+      - name: site
+        label: "Whole site (hero, projects, pricing…)"
+        file: content/site.json
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Availability note", name: availability, widget: string }
+              - { label: "Headline (HTML allowed)", name: title, widget: string }
+              - { label: "Intro paragraph (HTML allowed)", name: lead, widget: text }
+              - label: "Stack chips"
+                name: chips
+                widget: list
+                field: { label: Chip, name: chip, widget: string }
+              - label: Buttons
+                name: cta
+                widget: object
+                fields:
+                  - label: "Primary button"
+                    name: primary
+                    widget: object
+                    fields:
+                      - { label: Text, name: text, widget: string }
+                      - { label: Link, name: href, widget: string }
+                  - label: "Secondary button"
+                    name: secondary
+                    widget: object
+                    fields:
+                      - { label: Text, name: text, widget: string }
+                      - { label: Link, name: href, widget: string }
+              - label: Stats
+                name: stats
+                widget: list
+                fields:
+                  - { label: Number, name: num, widget: string }
+                  - { label: Label, name: label, widget: string }
+          - label: Portrait photo
+            name: portrait
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Image, name: image, widget: image, choose_url: true }
+              - { label: Alt text, name: alt, widget: string }
+              - { label: "Tag left (e.g. EST. KOCHI)", name: tagLeft, widget: string }
+              - { label: "Tag right (e.g. WORDPRESS · ELEMENTOR)", name: tagRight, widget: string }
+          - label: "Work section heading"
+            name: work
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title (HTML allowed), name: title, widget: string }
+              - { label: Subtitle, name: sub, widget: string }
+          - label: Projects
+            name: projects
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Client / project name", name: name, widget: string }
+              - { label: Description, name: desc, widget: text }
+              - { label: "Website URL", name: link, widget: string }
+              - { label: Screenshot, name: image, widget: image, choose_url: true }
+              - label: "Card tags (shown on the card)"
+                name: tags
+                widget: list
+                fields:
+                  - { label: Text, name: text, widget: string }
+                  - { label: "Style (hot / live / empty)", name: cls, widget: string, required: false }
+              - label: "Categories (space-separated: live kerala uae finance education …)"
+                name: cats
+                widget: list
+                field: { label: Category, name: cat, widget: string }
+              - label: "Brand colors (keep empty to use default)"
+                name: colors
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: "Background (--mbg)", name: bg, widget: string, required: false }
+                  - { label: "Foreground (--mfg)", name: fg, widget: string, required: false }
+                  - { label: "Accent (--mk-accent)", name: accent, widget: string, required: false }
+              - { label: "Featured (big card)", name: featured, widget: boolean, default: false }
+          - label: Contact section
+            name: contact
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Subtitle, name: sub, widget: string }
+              - { label: Email, name: email, widget: string }
+              - { label: "WhatsApp number", name: whatsapp, widget: string }
+              - { label: "LinkedIn handle", name: linkedin, widget: string }
+          - label: About page
+            name: about
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Title (HTML allowed), name: title, widget: string }
+              - label: Paragraphs
+                name: paragraphs
+                widget: list
+                field: { label: Paragraph, name: paragraph, widget: text }
+              - label: Facts
+                name: facts
+                widget: list
+                fields:
+                  - { label: Key, name: k, widget: string }
+                  - { label: Value, name: v, widget: string }
+          - label: Pricing page
+            name: pricing
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Title (HTML allowed), name: title, widget: string }
+              - { label: Subtitle, name: sub, widget: string }
+              - label: Packages
+                name: tiers
+                widget: list
+                summary: "{{fields.tier}} — {{fields.name}}"
+                fields:
+                  - { label: "Badge (e.g. Most chosen, optional)", name: badge, widget: string, required: false }
+                  - { label: "Package (Basic / Professional / E-commerce)", name: tier, widget: string }
+                  - { label: "Plan name", name: name, widget: string }
+                  - { label: "Currency symbol", name: currency, widget: string }
+                  - { label: "Amount (e.g. 5,000)", name: amount, widget: string }
+                  - { label: "Suffix (onwards)", name: from, widget: string }
+                  - { label: Description, name: desc, widget: text }
+                  - label: "What's included"
+                    name: features
+                    widget: list
+                    field: { label: Feature, name: feature, widget: string }
+                  - { label: "Button text", name: cta, widget: string }
+                  - { label: "Highlight (featured)", name: featured, widget: boolean, default: false }
+              - { label: "Bottom note", name: note, widget: text }
+          - label: FAQ (pricing page)
+            name: faq
+            widget: list
+            summary: "{{fields.q}}"
+            fields:
+              - { label: Question, name: q, widget: string }
+              - { label: Answer, name: a, widget: text }
