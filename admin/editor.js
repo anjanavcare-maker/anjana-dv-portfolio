@@ -151,6 +151,10 @@
           setPath(json, path, 'assets/uploads/' + name);
           overrides[path] = dataUrl;
           markDirty(); pushToFrame();
+          setTimeout(pushToFrame, 300); // survive any iframe reload race
+          if (path.indexOf('portrait') === 0 || path.indexOf('projects') === 0) {
+            loadPage('index.html'); // show the page that hosts this image
+          }
           status('\u2705 Uploaded — image will appear on the site after Save & Publish (preview shows it now)', 'ok');
           if (done) done();
         } else if (r.status === 409 && !retried) {

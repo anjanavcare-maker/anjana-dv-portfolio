@@ -23,6 +23,17 @@
     return IMG[path] || fallback || '';
   }
   /* ---------- edit-mode plumbing ---------- */
+  var appliedFromParent = false;
+  // Editor channel registers immediately (before any fetch) so uploads/edits
+  // from the parent are never missed or clobbered by our own content load.
+  window.addEventListener('message', function (e) {
+    if (e.origin !== window.location.origin) return;
+    var d = e.data;
+    if (!d || d.type !== 'cms:apply') return;
+    appliedFromParent = true;
+    apply(d.json, true, d.images || {});
+  });
+
   function mark(el, path, isHtml) {
     if (!IS_EDIT || !el) return;
     el.setAttribute('data-cms-path', path);
@@ -42,12 +53,6 @@
         window.parent.postMessage({ type: 'cms:change', path: path, value: value, html: !!t.getAttribute('data-cms-html') }, window.location.origin);
       }
     }, true);
-    window.addEventListener('message', function (e) {
-      if (e.origin !== window.location.origin) return;
-      var d = e.data;
-      if (!d || d.type !== 'cms:apply') return;
-      apply(d.json, true, d.images || {});
-    });
   }
 
   /* ---------- all applies take (d, force) — force re-renders in edit mode ---------- */
@@ -231,7 +236,11 @@
   function boot() {
     fetch(DATA_URL + '?v=' + Date.now(), { cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw new Error('no content'); return r.json(); })
-      .then(function (json) { apply(json, false); listenEdits(); })
+      .then(function (json) {
+        // If the editor already pushed fresher content, don't clobber it.
+        if (!appliedFromParent) apply(json, false);
+        listenEdits();
+      })
       .catch(function () { listenEdits(); /* keep the static markup when no content */ });
   }
 
