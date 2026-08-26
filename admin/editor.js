@@ -363,8 +363,6 @@
       var b = document.createElement('div');
       b.appendChild(makeField({ path: 'portrait.image', label: 'Portrait photo', type: 'image' }));
       b.appendChild(makeField({ path: 'portrait.alt', label: 'Alt text', type: 'text' }));
-      b.appendChild(makeField({ path: 'portrait.tagLeft', label: 'Tag left', type: 'text' }));
-      b.appendChild(makeField({ path: 'portrait.tagRight', label: 'Tag right', type: 'text' }));
       return b;
     })()));
 

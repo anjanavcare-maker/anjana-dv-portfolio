@@ -92,10 +92,6 @@
       if (d.portrait.alt) pi.setAttribute('alt', d.portrait.alt);
       mark(pi, 'portrait.image');
     }
-    var pt = q('.portrait-tag');
-    if (pt && d.portrait) {
-      pt.innerHTML = '<span data-cms-path="portrait.tagLeft"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(d.portrait.tagLeft) + '</span><span data-cms-path="portrait.tagRight"' + (IS_EDIT ? ' contenteditable="true"' : '') + '>' + esc(d.portrait.tagRight) + '</span>';
-    }
     var wh = { eyebrow: q('#work .eyebrow'), title: q('#work .sec-title'), sub: q('#work .sec-sub') };
     if (d.work) {
       if (wh.eyebrow && d.work.eyebrow) { wh.eyebrow.textContent = d.work.eyebrow; mark(wh.eyebrow, 'work.eyebrow'); }
