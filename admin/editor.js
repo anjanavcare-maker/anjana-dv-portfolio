@@ -11,7 +11,7 @@
   var BASE = 'content/site.json';
   var CONFIG_URL = '../' + BASE; // editor lives at /admin/ -> fetch from site root
   var API = 'https://api.github.com/repos/' + REPO + '/contents/' + BASE;
-  var ADMIN_KEY = 'anjana-dv-admin-2026'; // shared with the serverless api/ routes (Vercel env)
+  var ADMIN_KEY = sessionStorage.getItem('admin-pass') || ''; // passcode from auth-gate - api routes check it against Vercel env ADMIN_KEY
 
   var json = null;
   var dirty = false;
