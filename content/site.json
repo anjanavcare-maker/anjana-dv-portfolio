@@ -1,7 +1,7 @@
 {
   "hero": {
     "title": "I design websites that make businesses look <span class=\"em\">world-class.</span>",
-    "lead": "I'm <strong>Anjana DV</strong>, a WordPress web designer from Kerala building modern, dynamic websites for businesses across <strong>Kerala and the UAE</strong> ΓÇö from finance and education to infrastructure and contracting.",
+    "lead": "I'm <strong>Anjana DV</strong>, a WordPress web designer from Kerala building modern, dynamic websites for businesses across <strong>Kerala and the UAE</strong> — from finance and education to infrastructure and contracting.",
     "chips": [
       "WordPress",
       "Elementor",
@@ -15,7 +15,7 @@
         "href": "#contact"
       },
       "secondary": {
-        "text": "View my work ΓåÆ",
+        "text": "View my work →",
         "href": "#work"
       }
     },
@@ -26,11 +26,11 @@
       },
       {
         "num": "6",
-        "label": "Industries ΓÇö finance to infrastructure"
+        "label": "Industries — finance to infrastructure"
       },
       {
         "num": "2",
-        "label": "Markets ΓÇö Kerala & the UAE"
+        "label": "Markets — Kerala & the UAE"
       }
     ]
   },
@@ -38,17 +38,17 @@
     "image": "assets/uploads/1000253818.png",
     "alt": "Anjana DV",
     "tagLeft": "EST. KOCHI",
-    "tagRight": "WORDPRESS ┬╖ ELEMENTOR"
+    "tagRight": "WORDPRESS · ELEMENTOR"
   },
   "work": {
     "eyebrow": "Selected work",
     "title": "Real websites, running <span class=\"grad-word\">real</span> businesses.",
-    "sub": "Every project below is a live WordPress build ΓÇö designed, built and delivered end-to-end. Filter by market or industry."
+    "sub": "Every project below is a live WordPress build — designed, built and delivered end-to-end. Filter by market or industry."
   },
   "projects": [
     {
       "name": "DK Study Abroad LLP",
-      "desc": "A modern, dark-themed site for a Kochi study-abroad consultancy ΓÇö destination guides for eight countries, student success stories and enquiry flows, all on WordPress + Elementor.",
+      "desc": "A modern, dark-themed site for a Kochi study-abroad consultancy — destination guides for eight countries, student success stories and enquiry flows, all on WordPress + Elementor.",
       "link": "https://dkstudyabroad.com",
       "image": "assets/thumbs/dkstudyabroad.jpg",
       "tags": [
@@ -57,7 +57,7 @@
           "cls": "hot"
         },
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -83,12 +83,12 @@
     },
     {
       "name": "Bancofed",
-      "desc": "Gold loans, agri loans and small-business financing for Kerala ΓÇö a clean, trust-first financial site with service pages and partner listings.",
+      "desc": "Gold loans, agri loans and small-business financing for Kerala — a clean, trust-first financial site with service pages and partner listings.",
       "link": "https://bancofed.in",
       "image": "assets/thumbs/bancofed.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -114,12 +114,12 @@
     },
     {
       "name": "SU Square",
-      "desc": "A corporate site for a Kerala infrastructure group with five verticals ΓÇö projects, hire solutions, properties and ventures under one brand.",
+      "desc": "A corporate site for a Kerala infrastructure group with five verticals — projects, hire solutions, properties and ventures under one brand.",
       "link": "https://susquare.in",
       "image": "assets/thumbs/susquare.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -145,12 +145,12 @@
     },
     {
       "name": "TTK Insulation Contracting LLC",
-      "desc": "Waterproofing and insulation services for a Dubai contractor ΓÇö service catalogues, trust-building history and UAE-wide enquiry handling.",
+      "desc": "Waterproofing and insulation services for a Dubai contractor — service catalogues, trust-building history and UAE-wide enquiry handling.",
       "link": "https://ttkinsulation.com",
       "image": "assets/thumbs/ttkinsulation.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -176,12 +176,12 @@
     },
     {
       "name": "Guide to Career Consultancy",
-      "desc": "Career and education consultancy for the UAE market ΓÇö ten destination countries, university partnerships and call-back enquiry flows.",
+      "desc": "Career and education consultancy for the UAE market — ten destination countries, university partnerships and call-back enquiry flows.",
       "link": "https://guidetocareeruae.com",
       "image": "assets/thumbs/guidetocareer.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -212,7 +212,7 @@
       "image": "assets/thumbs/techinsys.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -239,12 +239,12 @@
     },
     {
       "name": "Smartcoin India",
-      "desc": "Site and partner-program pages for a financial-services platform ΓÇö product pages and a focused sign-up flow on WordPress.",
+      "desc": "Site and partner-program pages for a financial-services platform — product pages and a focused sign-up flow on WordPress.",
       "link": "https://smartcoindia.com",
       "image": "assets/thumbs/smartcoindia.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -270,12 +270,12 @@
     },
     {
       "name": "Indian Cooperative Credit Society Ltd",
-      "desc": "A WordPress site for a cooperative credit society ΓÇö member-first pages and a clear, trustworthy structure for a financial body.",
+      "desc": "A WordPress site for a cooperative credit society — member-first pages and a clear, trustworthy structure for a financial body.",
       "link": "https://iccsl.in",
       "image": "assets/thumbs/iccsl.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -296,12 +296,12 @@
     },
     {
       "name": "Varghese Moolans",
-      "desc": "A modern WordPress presence for a long-standing Kerala brand ΓÇö clean styling and a strong local identity, built to reflect heritage.",
+      "desc": "A modern WordPress presence for a long-standing Kerala brand — clean styling and a strong local identity, built to reflect heritage.",
       "link": "https://varghesemoolans.com",
       "image": "assets/thumbs/varghesemoolans.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -322,12 +322,12 @@
     },
     {
       "name": "Planitium FZE",
-      "desc": "Dubai-based car export company ΓÇö a product-led WordPress site connecting buyers worldwide to vehicles from DubaiΓÇÖs export market.",
+      "desc": "Dubai-based car export company — a product-led WordPress site connecting buyers worldwide to vehicles from Dubai’s export market.",
       "link": "https://planitium.com",
       "image": "assets/thumbs/planitium.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -351,13 +351,13 @@
       "featured": false
     },
     {
-      "name": "Tyre Guru ΓÇö TYREX",
+      "name": "Tyre Guru — TYREX",
       "desc": "A fast, mobile-first WordPress site for a Kerala tyre retail brand, built around product discovery and local in-store enquiry.",
       "link": "https://thetyreguru.com",
       "image": "assets/thumbs/thetyreguru.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -382,12 +382,12 @@
     },
     {
       "name": "CADBIM Centre",
-      "desc": "A BIM & CAD training institute in Kerala ΓÇö course pages for Revit, AutoCAD and MEP with practical training and career support.",
+      "desc": "A BIM & CAD training institute in Kerala — course pages for Revit, AutoCAD and MEP with practical training and career support.",
       "link": "https://cadbimcentre.in",
       "image": "assets/thumbs/cadbimcentre.jpg",
       "tags": [
         {
-          "text": "ΓùÅ Live",
+          "text": "● Live",
           "cls": "live"
         },
         {
@@ -414,7 +414,7 @@
   ],
   "contact": {
     "title": "Let's build your next website.",
-    "sub": "Tell me what your business needs ΓÇö I usually reply within a day.",
+    "sub": "Tell me what your business needs — I usually reply within a day.",
     "email": "hello@anjanadv.com",
     "whatsapp": "+91 00000 00000",
     "linkedin": "/in/anjanadv"
@@ -422,9 +422,9 @@
   "about": {
     "title": "Designing for <span class=\"grad-word\">real businesses</span>, not just screens.",
     "paragraphs": [
-      "I'm Anjana DV , a web designer from Kerala, India . I build websites on WordPress because it lets my clients own their content ΓÇö every site I deliver is one they can update themselves.",
-      "My work spans six industries across two markets ΓÇö gold-loan companies in Kochi, study-abroad consultancies, Dubai contractors and UAE career firms. That range is deliberate: every industry taught me a different way a website has to earn trust ΓÇö finance needs credibility, education needs warmth, contracting needs proof.",
-      "What you get is a designer who treats your business goal as the brief ΓÇö then handles layout, copy structure, launch and support so you never touch a line of code."
+      "I'm Anjana DV , a web designer from Kerala, India . I build websites on WordPress because it lets my clients own their content — every site I deliver is one they can update themselves.",
+      "My work spans six industries across two markets — gold-loan companies in Kochi, study-abroad consultancies, Dubai contractors and UAE career firms. That range is deliberate: every industry taught me a different way a website has to earn trust — finance needs credibility, education needs warmth, contracting needs proof.",
+      "What you get is a designer who treats your business goal as the brief — then handles layout, copy structure, launch and support so you never touch a line of code."
     ],
     "facts": [
       [
@@ -437,29 +437,29 @@
       ],
       [
         "Specialty",
-        "WordPress ┬╖ Elementor"
+        "WordPress · Elementor"
       ],
       [
         "Projects",
-        "13 delivered ┬╖ 12 live"
+        "13 delivered · 12 live"
       ]
     ]
   },
   "pricing": {
     "title": "Simple pricing, honest <span class=\"grad-word\">value</span>.",
-    "sub": "Transparent packages with a starting point for every business ΓÇö exact quotes after a quick chat about your needs.",
+    "sub": "Transparent packages with a starting point for every business — exact quotes after a quick chat about your needs.",
     "tiers": [
       {
         "featured": false,
         "badge": "",
         "tier": "Basic",
         "name": "Business Website",
-        "currency": "Γé╣",
+        "currency": "₹",
         "amount": "5,000",
         "from": "onwards",
-        "desc": "A clean, professional website that presents your business properly ΓÇö minimum 5 pages.",
+        "desc": "A clean, professional website that presents your business properly — minimum 5 pages.",
         "features": [
-          "5 pages ΓÇö Home, About, Services, Gallery, Contact",
+          "5 pages — Home, About, Services, Gallery, Contact",
           "Mobile-friendly design",
           "Contact form & WhatsApp button",
           "Launch support"
@@ -471,7 +471,7 @@
         "badge": "Most chosen",
         "tier": "Professional",
         "name": "Business Plus",
-        "currency": "Γé╣",
+        "currency": "₹",
         "amount": "12,000",
         "from": "onwards",
         "desc": "A modern, dynamic site with more pages and room to grow.",
@@ -488,14 +488,14 @@
         "badge": "",
         "tier": "E-commerce",
         "name": "Online Store",
-        "currency": "Γé╣",
+        "currency": "₹",
         "amount": "18,000",
         "from": "onwards",
         "desc": "A full store with products, cart, checkout and payment integration.",
         "features": [
           "WooCommerce store setup",
           "Product catalog & categories",
-          "Payment integration ΓÇö UPI, cards, Razorpay",
+          "Payment integration — UPI, cards, Razorpay",
           "Order & inventory management"
         ],
         "cta": "Start your store"
@@ -506,19 +506,19 @@
   "faq": [
     {
       "q": "How long does a website take?",
-      "a": "Once you provide all your content and information, delivery happens in minimum time ΓÇö most projects go live within days, not weeks."
+      "a": "Once you provide all your content and information, delivery happens in minimum time — most projects go live within days, not weeks."
     },
     {
       "q": "What do you need from me to start?",
-      "a": "Text, images, your logo, and a clear idea of the pages you want. The more complete the information, the faster the build ΓÇö use the planner above to map it out in five taps."
+      "a": "Text, images, your logo, and a clear idea of the pages you want. The more complete the information, the faster the build — use the planner above to map it out in five taps."
     },
     {
       "q": "Do I get a domain and hosting?",
-      "a": "Yes ΓÇö I set up your domain and hosting as part of the project, and hand everything over so you fully own your website."
+      "a": "Yes — I set up your domain and hosting as part of the project, and hand everything over so you fully own your website."
     },
     {
       "q": "Can I edit the site myself afterwards?",
-      "a": "Every site is built on WordPress, so yes. You can update text, images and pages without touching code ΓÇö and I'm always here for support."
+      "a": "Every site is built on WordPress, so yes. You can update text, images and pages without touching code — and I'm always here for support."
     },
     {
       "q": "Can you integrate payments on my store?",
