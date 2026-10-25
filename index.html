@@ -16,6 +16,8 @@
   <meta name="twitter:description" content="Modern, dynamic WordPress websites for businesses in Kerala &amp; the UAE." />
   <meta name="twitter:image" content="assets/og-image.png" />
   <meta name="theme-color" content="#1B1308" />
+  <link rel="canonical" href="https://www.anjanadv.com/" />
+  <meta property="og:url" content="https://www.anjanadv.com/" />
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,12 +26,56 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Anjana DV",
-    "jobTitle": "WordPress Web Designer",
-    "description": "WordPress web designer building modern, dynamic business websites for clients across Kerala and the UAE.",
-    "address": { "@type": "PostalAddress", "addressRegion": "Kerala", "addressCountry": "IN" },
-    "knowsAbout": ["WordPress", "Elementor", "WooCommerce", "Web Design", "Responsive Design"]
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://www.anjanadv.com/#business",
+        "name": "Anjana DV \u2014 WordPress Web Designer",
+        "description": "WordPress web designer building modern, dynamic business websites for brands across Kerala and the United Arab Emirates.",
+        "url": "https://www.anjanadv.com/",
+        "image": "https://www.anjanadv.com/assets/og-image.png",
+        "logo": "https://www.anjanadv.com/assets/logo-anjana-transparent.png",
+        "founder": { "@id": "https://www.anjanadv.com/#anjana" },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kochi",
+          "addressRegion": "Kerala",
+          "addressCountry": "IN"
+        },
+        "areaServed": [
+          { "@type": "State", "name": "Kerala" },
+          { "@type": "Country", "name": "United Arab Emirates" }
+        ],
+        "knowsAbout": ["WordPress", "Elementor", "WooCommerce", "Web Design", "Responsive Design", "SEO"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Website design services",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business websites" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "E-commerce stores" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Landing pages" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website redesigns" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website care and maintenance" } }
+          ]
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://www.anjanadv.com/#anjana",
+        "name": "Anjana DV",
+        "jobTitle": "WordPress Web Designer",
+        "url": "https://www.anjanadv.com/about.html",
+        "worksFor": { "@id": "https://www.anjanadv.com/#business" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.anjanadv.com/#website",
+        "url": "https://www.anjanadv.com/",
+        "name": "Anjana DV \u2014 WordPress Web Designer",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.anjanadv.com/#business" }
+      }
+    ]
   }
   </script>
 </head>
@@ -97,7 +143,7 @@
           <div class="portrait" role="img" aria-label="Anjana DV - WordPress web designer portrait">
             <span class="portrait-corner pc-tl" aria-hidden="true"></span>
             <span class="portrait-corner pc-br" aria-hidden="true"></span>
-            <img class="portrait-img" src="assets/uploads/elephant-color.png" alt="Anjana DV" width="680" height="782" />
+            <img class="portrait-img" src="assets/uploads/anjana.jpg" alt="Anjana DV" width="1080" height="1075" />
           </div>
         </div>
       </div>

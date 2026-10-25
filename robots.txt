@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Private editing interface and serverless endpoints
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://www.anjanadv.com/sitemap.xml
