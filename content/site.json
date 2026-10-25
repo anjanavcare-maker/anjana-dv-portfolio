@@ -423,7 +423,7 @@
     "hero": {
       "eyebrow": "Growth Partnership",
       "title": "A website is the start. <span class=\"grad-word\">Enquiries are the point.</span>",
-      "lead": "The Growth Partnership pairs your website with the search visibility, content and follow-through that keep it earning. One monthly plan, worked on every week, reviewed with you every month.",
+      "lead": "Most businesses do not need another website. They need to be found by the people already looking for what they sell. The Growth Partnership pairs a site built to convert with the search visibility, content and reporting that keep enquiries arriving — one monthly plan, reviewed with you every month.",
       "chips": [
         "Website build included",
         "3-month minimum",
@@ -451,7 +451,7 @@
     },
     "compare": {
       "title": "Build once, or build and keep going.",
-      "sub": "Some businesses need a good website and nothing else. Others need someone to keep working on visibility after launch. Both are valid — pick the one that matches where you are.",
+      "sub": "Some businesses only need a good website, and that is a perfectly good outcome. Others need somebody working on visibility after launch, because a site nobody finds does not pay for itself. Both are valid — pick the one that matches where your business is right now.",
       "rows": [
         {
           "label": "Website design & build",
@@ -497,11 +497,11 @@
     },
     "included": {
       "title": "Eight connected activities. One monthly fee.",
-      "sub": "These are not separate services bought one by one. They are worked as one system, because a campaign, a landing page and a search result all shape the same enquiry."
+      "sub": "These are not separate services bought one by one. A campaign, a landing page and a search result all shape the same enquiry, so they are worked as one system and reviewed together. Nothing here is bought in bulk from a marketplace and resold with a margin attached."
     },
     "deliverables": {
       "title": "The work, counted.",
-      "sub": "Retainers get a bad name because nobody says what is actually delivered. This is what one month looks like.",
+      "sub": "Retainers get a bad name because nobody says what is actually delivered. This is what one month looks like — a fixed set of work, not an open-ended promise of \"ongoing support\".",
       "items": [
         {
           "label": "Articles written and published",
@@ -543,28 +543,28 @@
         {
           "num": "STEP 01",
           "name": "Audit",
-          "desc": "I look at your current site, your competitors and what people search for in your market. No assumptions."
+          "desc": "I look at your current site, your competitors and what people search for in your market. You get the findings whether or not we end up working together."
         },
         {
           "num": "STEP 02",
           "name": "Plan",
-          "desc": "We agree the 20 keywords, the content calendar and the measures that decide whether this is working."
+          "desc": "We agree the 20 keywords, the content calendar and the measures that decide whether this is working. No vague promises about \"brand awareness\"."
         },
         {
           "num": "STEP 03",
           "name": "Build & launch",
-          "desc": "The site ships, tracking goes in, the Google Business Profile is completed and the first content goes live."
+          "desc": "The site ships, tracking goes in, the Google Business Profile is completed and the first content goes live — usually inside the first month."
         },
         {
           "num": "STEP 04",
           "name": "Monthly cycle",
-          "desc": "Publish, measure, adjust. We review together each month and set priorities for the next one."
+          "desc": "Publish, measure, adjust. We review together each month and set priorities for the next one, so the work follows evidence rather than habit."
         }
       ]
     },
     "industries": {
       "title": "Built around how your customers choose.",
-      "sub": "The channels change by industry. A gold-loan branch and a Dubai contractor are not found in the same places, and should not be marketed the same way.",
+      "sub": "The channels change by industry. A gold-loan branch and a Dubai contractor are not found in the same places, and should not be marketed the same way. These are the sectors already in the portfolio — the patterns carry over.",
       "items": [
         {
           "name": "Finance & NBFC",
@@ -589,6 +589,30 @@
         {
           "name": "Clinics & wellness",
           "desc": "Local visibility, service information and a simple route to book an appointment."
+        },
+        {
+          "name": "Real estate & property",
+          "desc": "Project pages, locality content and enquiry forms that capture serious buyers."
+        },
+        {
+          "name": "Travel & hospitality",
+          "desc": "Destination content, seasonal campaigns and booking enquiries that arrive ready to convert."
+        },
+        {
+          "name": "Logistics & transport",
+          "desc": "Service coverage, route clarity and B2B enquiries from shippers and partners."
+        },
+        {
+          "name": "Manufacturing & industrial",
+          "desc": "Capability pages, specification sheets and distributor enquiries from trade buyers."
+        },
+        {
+          "name": "Training & skill institutes",
+          "desc": "Course pages, placement proof and admission enquiries tied to intake cycles."
+        },
+        {
+          "name": "Retail & e-commerce",
+          "desc": "Catalogue structure, category search and campaigns built around margin, not traffic."
         }
       ]
     },
@@ -624,47 +648,63 @@
           "a": "Yes. Existing sites are audited first. If the foundation is sound, the work goes into search, content and conversion. If it is holding results back, the rebuild is folded into the plan."
         },
         {
+          "q": "Who actually does the work?",
+          "a": "I do. There is no account manager relay and no outsourced content farm. Strategy, build, writing and reporting come from one person, which is why the client list stays small."
+        },
+        {
+          "q": "What do you need from me each month?",
+          "a": "About an hour for the monthly review, and quick approval on content before it publishes. Everything else — research, writing, design, scheduling and reporting — is handled here."
+        },
+        {
+          "q": "How will I know it is working?",
+          "a": "A weekly report shows what was published, what moved in search, and what enquiries came in. Once a month we go through it together and decide what to change."
+        },
+        {
           "q": "Is there a minimum term?",
           "a": "Three months, because search and content work needs time to compound. After that it continues month to month with no lock-in."
+        },
+        {
+          "q": "What happens after I send an enquiry?",
+          "a": "You get a WhatsApp reply, usually within a day, with a short set of questions about your business. If it looks like a fit, we schedule a call and put together a plan with priorities and a budget."
         }
       ]
     },
     "enquiry": {
       "title": "Tell me about the business.",
-      "sub": "A few details is enough to start. You get a WhatsApp reply, usually within a day, with the questions that matter for your industry."
+      "sub": "A few details is enough to start. You get a WhatsApp reply, usually within a day, with the questions that matter for your industry — not a generic brochure."
     },
     "activities": [
       {
         "name": "Search engine optimisation",
-        "desc": "Technical health, page structure and content matched to what your customers actually type into Google."
+        "desc": "Technical health, page structure and content matched to what your customers actually type into Google. Reviewed monthly against a fixed set of 20 keywords."
       },
       {
         "name": "Google Business Profile",
-        "desc": "Hours, services, photos and reviews kept current, so you show up when nearby customers search."
+        "desc": "Hours, services, photos and reviews kept current so you appear when nearby customers search. Most local enquiries begin here, not on your website."
       },
       {
         "name": "Content",
-        "desc": "Articles and service pages written around the questions people ask before they enquire."
+        "desc": "Articles and service pages written around the questions people ask before they enquire. Each piece answers one question properly rather than filling a calendar."
       },
       {
         "name": "Social media",
-        "desc": "A steady, useful presence with posters that point back to the site instead of disappearing into the feed."
+        "desc": "A steady presence with posters that point back to the site instead of disappearing into the feed. Twelve a month, planned around what you actually sell."
       },
       {
         "name": "Landing pages",
-        "desc": "Focused pages for each campaign, so paid traffic arrives somewhere built to convert rather than a homepage."
+        "desc": "Focused pages for each campaign, so paid traffic arrives somewhere built to convert rather than a homepage. Built, tested and adjusted while the campaign runs."
       },
       {
         "name": "Paid campaigns",
-        "desc": "Google and Meta campaigns managed against enquiries, not clicks. Spend stays in your name, in your account."
+        "desc": "Google and Meta campaigns managed against enquiries, not clicks. Spend stays in your name and in your account, so you can see every rupee that leaves it."
       },
       {
         "name": "Reporting",
-        "desc": "A weekly report and a monthly call. What was done, what the numbers say, and what to change next."
+        "desc": "A weekly report and a monthly call. What was done, what the numbers say and what to change next — in plain language, not dashboard screenshots."
       },
       {
         "name": "Conversion tracking",
-        "desc": "Form fills, WhatsApp clicks and calls measured properly, so decisions rest on real enquiries."
+        "desc": "Form fills, WhatsApp clicks and calls measured properly, so decisions rest on real enquiries rather than sessions and impressions."
       }
     ]
   },
