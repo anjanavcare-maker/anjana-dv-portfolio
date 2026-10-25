@@ -163,7 +163,12 @@
       if (v) {
         if (val) {
           var linkEl = v.querySelector('a');
-          if (linkEl) { linkEl.textContent = val; } else { v.textContent = val; }
+          if (linkEl) {
+            linkEl.textContent = val;
+            if (key === 'whatsapp') {
+              linkEl.href = 'https://wa.me/' + String(val).replace(/\D/g, '');
+            }
+          } else { v.textContent = val; }
           mark(v, 'contact.' + key);
         }
         v.setAttribute('data-cms-path', 'contact.' + key);
