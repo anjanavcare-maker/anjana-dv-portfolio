@@ -151,6 +151,133 @@ collections:
                   - { label: "Button text", name: cta, widget: string }
                   - { label: "Highlight (featured)", name: featured, widget: boolean, default: false }
               - { label: "Bottom note", name: note, widget: text }
+          - label: Growth page
+            name: growth
+            widget: object
+            collapsed: true
+            fields:
+              - label: Hero
+                name: hero
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: Eyebrow, name: eyebrow, widget: string }
+                  - { label: "Headline (HTML allowed)", name: title, widget: string }
+                  - { label: "Intro paragraph", name: lead, widget: text }
+                  - label: "Trust chips"
+                    name: chips
+                    widget: list
+                    field: { label: Chip, name: chip, widget: string }
+                  - { label: "Primary button", name: ctaPrimary, widget: string }
+                  - { label: "Secondary button", name: ctaSecondary, widget: string }
+              - label: Package card
+                name: package
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Name, name: name, widget: string }
+                  - { label: "Currency symbol", name: currency, widget: string }
+                  - { label: "Amount (e.g. 20,000)", name: amount, widget: string }
+                  - { label: "Period suffix", name: per, widget: string }
+                  - { label: "Price note", name: note, widget: text }
+                  - label: "Included items"
+                    name: features
+                    widget: list
+                    field: { label: Item, name: item, widget: string }
+                  - { label: "Button text", name: cta, widget: string }
+                  - { label: "Small print", name: foot, widget: text }
+              - label: Comparison table
+                name: compare
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: "Title (HTML allowed)", name: title, widget: string }
+                  - { label: Subtitle, name: sub, widget: text }
+                  - label: Rows
+                    name: rows
+                    widget: list
+                    summary: "{{fields.label}}"
+                    fields:
+                      - { label: "What you get", name: label, widget: string }
+                      - { label: "Website only", name: one, widget: string }
+                      - { label: "Growth Partnership", name: growth, widget: string }
+              - label: Activities heading
+                name: included
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: "Title (HTML allowed)", name: title, widget: string }
+                  - { label: Subtitle, name: sub, widget: text }
+              - label: Activities
+                name: activities
+                widget: list
+                summary: "{{fields.name}}"
+                fields:
+                  - { label: Name, name: name, widget: string }
+                  - { label: Description, name: desc, widget: text }
+              - label: Deliverables
+                name: deliverables
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: "Title (HTML allowed)", name: title, widget: string }
+                  - { label: Subtitle, name: sub, widget: text }
+                  - label: Items
+                    name: items
+                    widget: list
+                    summary: "{{fields.label}}"
+                    fields:
+                      - { label: What, name: label, widget: string }
+                      - { label: "How many", name: value, widget: string }
+              - label: Process
+                name: process
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: "Title (HTML allowed)", name: title, widget: string }
+                  - label: Steps
+                    name: items
+                    widget: list
+                    summary: "{{fields.name}}"
+                    fields:
+                      - { label: "Label (STEP 01)", name: num, widget: string }
+                      - { label: Name, name: name, widget: string }
+                      - { label: Description, name: desc, widget: text }
+              - label: Industries
+                name: industries
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: "Title (HTML allowed)", name: title, widget: string }
+                  - { label: Subtitle, name: sub, widget: text }
+                  - label: Items
+                    name: items
+                    widget: list
+                    summary: "{{fields.name}}"
+                    fields:
+                      - { label: Industry, name: name, widget: string }
+                      - { label: Description, name: desc, widget: text }
+              - label: FAQ
+                name: faq
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: "Title (HTML allowed)", name: title, widget: string }
+                  - label: Questions
+                    name: items
+                    widget: list
+                    summary: "{{fields.q}}"
+                    fields:
+                      - { label: Question, name: q, widget: string }
+                      - { label: Answer, name: a, widget: text }
+              - label: Enquiry section
+                name: enquiry
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: "Title (HTML allowed)", name: title, widget: string }
+                  - { label: Subtitle, name: sub, widget: text }
           - label: FAQ (pricing page)
             name: faq
             widget: list

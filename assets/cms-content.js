@@ -230,11 +230,152 @@
     }
   }
 
+  function applyGrowth(d, force) {
+    var g = d.growth;
+    if (!g) return;
+
+    function setText(sel, value, path) {
+      var el = q(sel);
+      if (el && value) { el.textContent = value; mark(el, path); }
+    }
+    function setHtml(sel, value, path) {
+      var el = q(sel);
+      if (el && value) { el.innerHTML = value; mark(el, path, true); }
+    }
+    function editable(path) {
+      return ' data-cms-path="' + path + '"' + (IS_EDIT ? ' contenteditable="true"' : '');
+    }
+
+    if (g.hero) {
+      setText('.g-hero .eyebrow', g.hero.eyebrow, 'growth.hero.eyebrow');
+      setHtml('.g-hero h1', g.hero.title, 'growth.hero.title');
+      setText('.g-hero .g-lead', g.hero.lead, 'growth.hero.lead');
+      var chips = q('.g-chips');
+      if (chips && g.hero.chips) {
+        chips.innerHTML = g.hero.chips.map(function (c, i) {
+          return '<span class="g-chip"' + editable('growth.hero.chips.' + i) + '>' + esc(c) + '</span>';
+        }).join('');
+      }
+      var acts = qa('.g-hero-actions .btn');
+      if (acts[0] && g.hero.ctaPrimary) acts[0].innerHTML = esc(g.hero.ctaPrimary) + ' <span class="arr" aria-hidden="true">\u2192</span>';
+      if (acts[1] && g.hero.ctaSecondary) acts[1].textContent = g.hero.ctaSecondary;
+    }
+
+    if (g.package) {
+      var p = g.package;
+      setText('.g-package-label', p.label, 'growth.package.label');
+      setText('.g-package-name', p.name, 'growth.package.name');
+      var cur = q('.g-package-price .cur');
+      if (cur && p.currency) cur.textContent = p.currency;
+      var num = q('.g-package-price .num');
+      if (num && p.amount) num.textContent = p.amount;
+      var per = q('.g-package-price .per');
+      if (per && p.per) per.textContent = p.per;
+      setText('.g-package-note', p.note, 'growth.package.note');
+      var list = q('.g-package-list');
+      if (list && p.features) {
+        var iconEl = q('li svg', list);
+        var icon = iconEl ? iconEl.outerHTML : '';
+        list.innerHTML = p.features.map(function (f, i) {
+          return '<li>' + icon + '<span' + editable('growth.package.features.' + i) + '>' + esc(f) + '</span></li>';
+        }).join('');
+      }
+      var pkgBtn = q('.g-package .btn');
+      if (pkgBtn && p.cta) pkgBtn.innerHTML = esc(p.cta) + ' <span class="arr" aria-hidden="true">\u2192</span>';
+      setText('.g-package-foot', p.foot, 'growth.package.foot');
+    }
+
+    if (g.compare) {
+      setHtml('#compare .sec-title', g.compare.title, 'growth.compare.title');
+      setText('#compare .sec-sub', g.compare.sub, 'growth.compare.sub');
+      var tbody = q('#compare .g-compare tbody');
+      if (tbody && g.compare.rows) {
+        tbody.innerHTML = g.compare.rows.map(function (r, i) {
+          return '<tr><th scope="row"' + editable('growth.compare.rows.' + i + '.label') + '>' + esc(r.label) + '</th>' +
+                 '<td' + editable('growth.compare.rows.' + i + '.one') + '>' + esc(r.one) + '</td>' +
+                 '<td class="col-growth"' + editable('growth.compare.rows.' + i + '.growth') + '>' + esc(r.growth) + '</td></tr>';
+        }).join('');
+      }
+    }
+
+    if (g.included) {
+      setHtml('#included .sec-title', g.included.title, 'growth.included.title');
+      setText('#included .sec-sub', g.included.sub, 'growth.included.sub');
+    }
+
+    if (g.activities) {
+      var grid = q('.g-act-grid');
+      if (grid) {
+        var icons = qa('.g-act-grid .g-act-icon').map(function (el) { return el.innerHTML; });
+        grid.innerHTML = g.activities.map(function (a, i) {
+          return '<article class="g-act">' +
+            '<div class="g-act-icon">' + (icons[i] || icons[0] || '') + '</div>' +
+            '<h3' + editable('growth.activities.' + i + '.name') + '>' + esc(a.name) + '</h3>' +
+            '<p' + editable('growth.activities.' + i + '.desc') + '>' + esc(a.desc) + '</p></article>';
+        }).join('');
+      }
+    }
+
+    if (g.deliverables) {
+      setHtml('#deliverables .sec-title', g.deliverables.title, 'growth.deliverables.title');
+      setText('#deliverables .sec-sub', g.deliverables.sub, 'growth.deliverables.sub');
+      var dl = q('.g-deliv');
+      if (dl && g.deliverables.items) {
+        dl.innerHTML = g.deliverables.items.map(function (it, i) {
+          return '<div class="g-deliv-row"><dt' + editable('growth.deliverables.items.' + i + '.label') + '>' + esc(it.label) + '</dt>' +
+                 '<dd' + editable('growth.deliverables.items.' + i + '.value') + '>' + esc(it.value) + '</dd></div>';
+        }).join('');
+      }
+    }
+
+    if (g.process) {
+      setHtml('#process .sec-title', g.process.title, 'growth.process.title');
+      var steps = q('.g-steps');
+      if (steps && g.process.items) {
+        steps.innerHTML = g.process.items.map(function (s, i) {
+          return '<article class="g-step">' +
+            '<p class="g-step-num"' + editable('growth.process.items.' + i + '.num') + '>' + esc(s.num || '') + '</p>' +
+            '<h3' + editable('growth.process.items.' + i + '.name') + '>' + esc(s.name) + '</h3>' +
+            '<p' + editable('growth.process.items.' + i + '.desc') + '>' + esc(s.desc) + '</p></article>';
+        }).join('');
+      }
+    }
+
+    if (g.industries) {
+      setHtml('#industries .sec-title', g.industries.title, 'growth.industries.title');
+      setText('#industries .sec-sub', g.industries.sub, 'growth.industries.sub');
+      var ind = q('.g-ind-grid');
+      if (ind && g.industries.items) {
+        ind.innerHTML = g.industries.items.map(function (it, i) {
+          return '<article class="g-ind"><h3' + editable('growth.industries.items.' + i + '.name') + '>' + esc(it.name) + '</h3>' +
+                 '<p' + editable('growth.industries.items.' + i + '.desc') + '>' + esc(it.desc) + '</p></article>';
+        }).join('');
+      }
+    }
+
+    if (g.faq) {
+      setHtml('#faq-growth .sec-title', g.faq.title, 'growth.faq.title');
+      var fl = q('#faq-growth .faq-list');
+      if (fl && g.faq.items) {
+        fl.innerHTML = g.faq.items.map(function (f, i) {
+          return '<details class="faq-item"' + (i === 0 ? ' open' : '') + '><summary' + editable('growth.faq.items.' + i + '.q') + '>' + esc(f.q) + '</summary>' +
+                 '<p' + editable('growth.faq.items.' + i + '.a') + '>' + esc(f.a) + '</p></details>';
+        }).join('');
+      }
+    }
+
+    if (g.enquiry) {
+      setHtml('#enquire .sec-title', g.enquiry.title, 'growth.enquiry.title');
+      setText('#enquire .sec-sub', g.enquiry.sub, 'growth.enquiry.sub');
+    }
+  }
+
   function apply(d, force, images) {
     IMG = images || {};
     if (q('.hero')) { applyHero(d, force); applyProjects(d, force); applyContact(d, force); }
     if (q('.about-grid')) applyAbout(d, force);
     if (q('.price-grid')) applyPricing(d, force);
+    if (q('.g-hero')) applyGrowth(d, force);
     if (IS_EDIT) document.body.classList.add('cms-edit-mode');
   }
 

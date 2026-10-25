@@ -419,6 +419,255 @@
     "whatsapp": "+91 85474 54062",
     "linkedin": "linkedin.com/in/anjana-d-v-b251b1203"
   },
+  "growth": {
+    "hero": {
+      "eyebrow": "Growth Partnership",
+      "title": "A website is the start. <span class=\"grad-word\">Enquiries are the point.</span>",
+      "lead": "The Growth Partnership pairs your website with the search visibility, content and follow-through that keep it earning. One monthly plan, worked on every week, reviewed with you every month.",
+      "chips": [
+        "Website build included",
+        "3-month minimum",
+        "Ad spend billed separately"
+      ],
+      "ctaPrimary": "Talk about your business",
+      "ctaSecondary": "See what's included"
+    },
+    "package": {
+      "label": "Monthly partnership",
+      "name": "Growth Partnership",
+      "currency": "₹",
+      "amount": "20,000",
+      "per": "/ month",
+      "note": "Website design and build included. Three-month minimum, then month to month.",
+      "features": [
+        "Website designed, built and launched",
+        "20 tracked keywords and a monthly SEO audit",
+        "4 articles and 12 social posters each month",
+        "Google Business Profile managed",
+        "Weekly report and monthly review call"
+      ],
+      "cta": "Discuss on WhatsApp",
+      "foot": "Advertising spend is paid directly to Google or Meta — never bundled into the fee."
+    },
+    "compare": {
+      "title": "Build once, or build and keep going.",
+      "sub": "Some businesses need a good website and nothing else. Others need someone to keep working on visibility after launch. Both are valid — pick the one that matches where you are.",
+      "rows": [
+        {
+          "label": "Website design & build",
+          "one": "One-time, from ₹5,000",
+          "growth": "Included"
+        },
+        {
+          "label": "Hosting, updates, backups",
+          "one": "Optional add-on",
+          "growth": "Included"
+        },
+        {
+          "label": "Search visibility",
+          "one": "Technical setup only",
+          "growth": "20 keywords, monthly audit"
+        },
+        {
+          "label": "Content",
+          "one": "You supply it",
+          "growth": "4 articles + 12 posters a month"
+        },
+        {
+          "label": "Google Business Profile",
+          "one": "Set up at launch",
+          "growth": "Managed monthly"
+        },
+        {
+          "label": "Paid campaigns",
+          "one": "—",
+          "growth": "Managed, spend separate"
+        },
+        {
+          "label": "Reporting",
+          "one": "Handover document",
+          "growth": "Weekly report + monthly call"
+        },
+        {
+          "label": "Billing",
+          "one": "Once",
+          "growth": "Monthly"
+        }
+      ]
+    },
+    "included": {
+      "title": "Eight connected activities. One monthly fee.",
+      "sub": "These are not separate services bought one by one. They are worked as one system, because a campaign, a landing page and a search result all shape the same enquiry."
+    },
+    "deliverables": {
+      "title": "The work, counted.",
+      "sub": "Retainers get a bad name because nobody says what is actually delivered. This is what one month looks like.",
+      "items": [
+        {
+          "label": "Articles written and published",
+          "value": "4"
+        },
+        {
+          "label": "Social posters designed",
+          "value": "12"
+        },
+        {
+          "label": "Keywords tracked",
+          "value": "20"
+        },
+        {
+          "label": "Quality backlinks built",
+          "value": "10"
+        },
+        {
+          "label": "Technical SEO audit",
+          "value": "1"
+        },
+        {
+          "label": "Google Business Profile updates",
+          "value": "4"
+        },
+        {
+          "label": "Weekly performance reports",
+          "value": "4"
+        },
+        {
+          "label": "Strategy review call",
+          "value": "1"
+        }
+      ]
+    },
+    "process": {
+      "title": "From first call to monthly rhythm.",
+      "items": [
+        {
+          "num": "STEP 01",
+          "name": "Audit",
+          "desc": "I look at your current site, your competitors and what people search for in your market. No assumptions."
+        },
+        {
+          "num": "STEP 02",
+          "name": "Plan",
+          "desc": "We agree the 20 keywords, the content calendar and the measures that decide whether this is working."
+        },
+        {
+          "num": "STEP 03",
+          "name": "Build & launch",
+          "desc": "The site ships, tracking goes in, the Google Business Profile is completed and the first content goes live."
+        },
+        {
+          "num": "STEP 04",
+          "name": "Monthly cycle",
+          "desc": "Publish, measure, adjust. We review together each month and set priorities for the next one."
+        }
+      ]
+    },
+    "industries": {
+      "title": "Built around how your customers choose.",
+      "sub": "The channels change by industry. A gold-loan branch and a Dubai contractor are not found in the same places, and should not be marketed the same way.",
+      "items": [
+        {
+          "name": "Finance & NBFC",
+          "desc": "Trust-first content, clear scheme pages and local search for branches and agents."
+        },
+        {
+          "name": "Study abroad & education",
+          "desc": "Destination pages, course intent and enquiry flows that reassure students and parents."
+        },
+        {
+          "name": "Contracting & infrastructure",
+          "desc": "Project proof, service catalogues and UAE-wide enquiry handling."
+        },
+        {
+          "name": "Automotive & retail",
+          "desc": "Product discovery, local store intent and campaigns built around stock that moves."
+        },
+        {
+          "name": "Professional services",
+          "desc": "Credibility, service clarity and the long-tail searches that signal real buying intent."
+        },
+        {
+          "name": "Clinics & wellness",
+          "desc": "Local visibility, service information and a simple route to book an appointment."
+        }
+      ]
+    },
+    "faq": {
+      "title": "The questions worth asking.",
+      "items": [
+        {
+          "q": "How is this different from the website package?",
+          "a": "The website package is a one-time build that ends at launch. The Growth Partnership keeps going: search visibility, content, Google Business Profile, campaigns and reporting are worked on every month and reviewed with you."
+        },
+        {
+          "q": "What does it cost?",
+          "a": "₹20,000 per month, with the website design and build included. Advertising spend is separate and paid directly to Google or Meta."
+        },
+        {
+          "q": "Is advertising spend included?",
+          "a": "No. The fee covers strategy, management and production. Ad spend is paid by you directly to the platform, so you keep full control and can see exactly where the money goes."
+        },
+        {
+          "q": "How long before I see results?",
+          "a": "Paid campaigns can produce enquiries within days. SEO is slower — usually three to six months before rankings and organic enquiries move meaningfully. Anyone promising faster organic results is guessing."
+        },
+        {
+          "q": "Can you guarantee first-page Google rankings?",
+          "a": "No, and no honest provider can. Google decides rankings. What can be controlled is the work that improves the odds: technical health, useful content, a complete Google Business Profile, reviews and quality links."
+        },
+        {
+          "q": "Do I need to be on every channel?",
+          "a": "No. Channels are chosen around where your customers actually look and compare. A study abroad consultancy and a Dubai contractor need very different mixes."
+        },
+        {
+          "q": "I already have a website. Can you still help?",
+          "a": "Yes. Existing sites are audited first. If the foundation is sound, the work goes into search, content and conversion. If it is holding results back, the rebuild is folded into the plan."
+        },
+        {
+          "q": "Is there a minimum term?",
+          "a": "Three months, because search and content work needs time to compound. After that it continues month to month with no lock-in."
+        }
+      ]
+    },
+    "enquiry": {
+      "title": "Tell me about the business.",
+      "sub": "A few details is enough to start. You get a WhatsApp reply, usually within a day, with the questions that matter for your industry."
+    },
+    "activities": [
+      {
+        "name": "Search engine optimisation",
+        "desc": "Technical health, page structure and content matched to what your customers actually type into Google."
+      },
+      {
+        "name": "Google Business Profile",
+        "desc": "Hours, services, photos and reviews kept current, so you show up when nearby customers search."
+      },
+      {
+        "name": "Content",
+        "desc": "Articles and service pages written around the questions people ask before they enquire."
+      },
+      {
+        "name": "Social media",
+        "desc": "A steady, useful presence with posters that point back to the site instead of disappearing into the feed."
+      },
+      {
+        "name": "Landing pages",
+        "desc": "Focused pages for each campaign, so paid traffic arrives somewhere built to convert rather than a homepage."
+      },
+      {
+        "name": "Paid campaigns",
+        "desc": "Google and Meta campaigns managed against enquiries, not clicks. Spend stays in your name, in your account."
+      },
+      {
+        "name": "Reporting",
+        "desc": "A weekly report and a monthly call. What was done, what the numbers say, and what to change next."
+      },
+      {
+        "name": "Conversion tracking",
+        "desc": "Form fills, WhatsApp clicks and calls measured properly, so decisions rest on real enquiries."
+      }
+    ]
+  },
   "about": {
     "title": "Designing for <span class=\"grad-word\">real businesses</span>, not just screens.",
     "paragraphs": [

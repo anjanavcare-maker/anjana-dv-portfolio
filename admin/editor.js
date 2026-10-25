@@ -73,7 +73,7 @@
   }
 
   /* ---------------- iframe preview ---------------- */
-  var PAGES = { 'index.html': '../index.html?edit=1', 'about.html': '../about.html?edit=1', 'pricing.html': '../pricing.html?edit=1' };
+  var PAGES = { 'index.html': '../index.html?edit=1', 'about.html': '../about.html?edit=1', 'pricing.html': '../pricing.html?edit=1', 'growth.html': '../growth.html?edit=1' };
   function loadPage(page) {
     $('cms-frame').src = PAGES[page] || PAGES['index.html'];
     document.querySelectorAll('.pv-btn').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-page') === page); });
@@ -448,6 +448,103 @@
         ]
       });
       b.appendChild(l);
+      return b;
+    })()));
+
+    // Growth page
+    root.appendChild(section('Growth page', (function () {
+      var b = document.createElement('div');
+      b.appendChild(makeField({ path: 'growth.hero.eyebrow', label: 'Eyebrow', type: 'text' }));
+      b.appendChild(makeField({ path: 'growth.hero.title', label: 'Headline (HTML allowed)', type: 'area' }));
+      b.appendChild(makeField({ path: 'growth.hero.lead', label: 'Intro paragraph', type: 'area' }));
+      b.appendChild(makeField({ path: 'growth.hero.chips', label: 'Trust chips (comma separated)', type: 'comma' }));
+      b.appendChild(makeField({ path: 'growth.hero.ctaPrimary', label: 'Primary button text', type: 'text' }));
+      b.appendChild(makeField({ path: 'growth.hero.ctaSecondary', label: 'Secondary button text', type: 'text' }));
+
+      b.appendChild(makeField({ path: 'growth.package.label', label: 'Package label', type: 'text' }));
+      b.appendChild(makeField({ path: 'growth.package.name', label: 'Package name', type: 'text' }));
+      b.appendChild(makeField({ path: 'growth.package.currency', label: 'Currency symbol', type: 'text' }));
+      b.appendChild(makeField({ path: 'growth.package.amount', label: 'Amount (e.g. 20,000)', type: 'text' }));
+      b.appendChild(makeField({ path: 'growth.package.per', label: 'Period suffix', type: 'text' }));
+      b.appendChild(makeField({ path: 'growth.package.note', label: 'Price note', type: 'area' }));
+      b.appendChild(makeField({ path: 'growth.package.features', label: 'Included (comma separated)', type: 'comma' }));
+      b.appendChild(makeField({ path: 'growth.package.cta', label: 'Package button text', type: 'text' }));
+      b.appendChild(makeField({ path: 'growth.package.foot', label: 'Small print under button', type: 'area' }));
+
+      b.appendChild(makeField({ path: 'growth.compare.title', label: 'Comparison title (HTML allowed)', type: 'area' }));
+      b.appendChild(makeField({ path: 'growth.compare.sub', label: 'Comparison subtitle', type: 'area' }));
+      b.appendChild(makeList({
+        path: 'growth.compare.rows', itemName: 'row', addLabel: 'row',
+        labelFn: function (it) { return it.label || 'row'; },
+        blank: function () { return { label: '', one: '', growth: '' }; },
+        fields: [
+          { path: 'label', label: 'What you get', type: 'text' },
+          { path: 'one', label: 'Website only', type: 'text' },
+          { path: 'growth', label: 'Growth Partnership', type: 'text' }
+        ]
+      }));
+
+      b.appendChild(makeField({ path: 'growth.included.title', label: 'Activities title (HTML allowed)', type: 'area' }));
+      b.appendChild(makeField({ path: 'growth.included.sub', label: 'Activities subtitle', type: 'area' }));
+      b.appendChild(makeList({
+        path: 'growth.activities', itemName: 'activity', addLabel: 'activity',
+        labelFn: function (it) { return it.name || 'activity'; },
+        blank: function () { return { name: '', desc: '' }; },
+        fields: [
+          { path: 'name', label: 'Name', type: 'text' },
+          { path: 'desc', label: 'Description', type: 'area' }
+        ]
+      }));
+
+      b.appendChild(makeField({ path: 'growth.deliverables.title', label: 'Deliverables title (HTML allowed)', type: 'area' }));
+      b.appendChild(makeField({ path: 'growth.deliverables.sub', label: 'Deliverables subtitle', type: 'area' }));
+      b.appendChild(makeList({
+        path: 'growth.deliverables.items', itemName: 'deliverable', addLabel: 'deliverable',
+        labelFn: function (it) { return it.label || 'deliverable'; },
+        blank: function () { return { label: '', value: '' }; },
+        fields: [
+          { path: 'label', label: 'What', type: 'text' },
+          { path: 'value', label: 'How many', type: 'text' }
+        ]
+      }));
+
+      b.appendChild(makeField({ path: 'growth.process.title', label: 'Process title (HTML allowed)', type: 'area' }));
+      b.appendChild(makeList({
+        path: 'growth.process.items', itemName: 'step', addLabel: 'step',
+        labelFn: function (it) { return it.name || 'step'; },
+        blank: function () { return { num: 'STEP', name: '', desc: '' }; },
+        fields: [
+          { path: 'num', label: 'Label (STEP 01)', type: 'text' },
+          { path: 'name', label: 'Step name', type: 'text' },
+          { path: 'desc', label: 'Description', type: 'area' }
+        ]
+      }));
+
+      b.appendChild(makeField({ path: 'growth.industries.title', label: 'Industries title (HTML allowed)', type: 'area' }));
+      b.appendChild(makeField({ path: 'growth.industries.sub', label: 'Industries subtitle', type: 'area' }));
+      b.appendChild(makeList({
+        path: 'growth.industries.items', itemName: 'industry', addLabel: 'industry',
+        labelFn: function (it) { return it.name || 'industry'; },
+        blank: function () { return { name: '', desc: '' }; },
+        fields: [
+          { path: 'name', label: 'Industry', type: 'text' },
+          { path: 'desc', label: 'Description', type: 'area' }
+        ]
+      }));
+
+      b.appendChild(makeField({ path: 'growth.faq.title', label: 'FAQ title (HTML allowed)', type: 'area' }));
+      b.appendChild(makeList({
+        path: 'growth.faq.items', itemName: 'question', addLabel: 'question',
+        labelFn: function (it) { return it.q || 'question'; },
+        blank: function () { return { q: '', a: '' }; },
+        fields: [
+          { path: 'q', label: 'Question', type: 'area' },
+          { path: 'a', label: 'Answer', type: 'area' }
+        ]
+      }));
+
+      b.appendChild(makeField({ path: 'growth.enquiry.title', label: 'Enquiry title (HTML allowed)', type: 'area' }));
+      b.appendChild(makeField({ path: 'growth.enquiry.sub', label: 'Enquiry subtitle', type: 'area' }));
       return b;
     })()));
 
