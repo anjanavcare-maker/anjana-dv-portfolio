@@ -161,7 +161,11 @@
       var note = q('.method-note', m);
       var val = c[key];
       if (v) {
-        if (val) { v.textContent = val; mark(v, 'contact.' + key); }
+        if (val) {
+          var linkEl = v.querySelector('a');
+          if (linkEl) { linkEl.textContent = val; } else { v.textContent = val; }
+          mark(v, 'contact.' + key);
+        }
         v.setAttribute('data-cms-path', 'contact.' + key);
         if (IS_EDIT) v.setAttribute('contenteditable', 'true');
       }

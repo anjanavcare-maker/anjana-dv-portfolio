@@ -1,5 +1,8 @@
-/* Anjana DV — Portfolio · interactions
+/* Anjana DV - Portfolio · interactions
    Filter · scroll-spy · reveal · form validation · misc chrome */
+
+/* Single source of truth for the WhatsApp contact number (digits only, country code). */
+var ANJANA_WHATSAPP = '918547454062';
 
 (function () {
   'use strict';
@@ -261,15 +264,15 @@
     });
   }
 
-  function buildMailto() {
-    var subject = 'Website enquiry — ' + (fType.value ? fType.value : 'New project');
-    var body =
+  function buildWhatsApp() {
+    var type = fType.value ? fType.value : 'New project';
+    var text =
+      'New website enquiry\n\n' +
       'Name: ' + fName.value.trim() + '\n' +
       'Email: ' + fEmail.value.trim() + '\n' +
-      'Project type: ' + (fType.value || '—') + '\n\n' +
-      fMsg.value.trim() + '\n';
-    return 'mailto:hello@anjanadv.com?subject=' + encodeURIComponent(subject) +
-           '&body=' + encodeURIComponent(body);
+      'Project type: ' + type + '\n\n' +
+      fMsg.value.trim();
+    return 'https://wa.me/' + ANJANA_WHATSAPP + '?text=' + encodeURIComponent(text);
   }
 
   form.addEventListener('submit', function (e) {
@@ -282,10 +285,10 @@
       if (firstInvalid) firstInvalid.focus();
       return;
     }
-    var mailto = buildMailto();
-    var fallback = document.getElementById('mailto-fallback');
-    if (fallback) fallback.href = mailto;
-    try { window.location.href = mailto; } catch (err) { /* fallback link available */ }
+    var whatsappUrl = buildWhatsApp();
+    var fallback = document.getElementById('whatsapp-fallback');
+    if (fallback) fallback.href = whatsappUrl;
+    try { window.open(whatsappUrl, '_blank', 'noopener'); } catch (err) { /* fallback link available */ }
     form.style.display = 'none';
     var success = document.getElementById('form-success');
     if (success) success.classList.add('show');
@@ -317,7 +320,7 @@
   if (!nameEl || !mock) return;
 
   var CATS = {
-    restaurant:  { tag: 'Restaurant',  title: 'Great food, made with love.', sub: 'Menus, offers and reservations — all in one place.', cta: 'View menu', services: ['Biryani', 'Kerala meals', 'Desserts', 'Home delivery'] },
+    restaurant:  { tag: 'Restaurant',  title: 'Great food, made with love.', sub: 'Menus, offers and reservations - all in one place.', cta: 'View menu', services: ['Biryani', 'Kerala meals', 'Desserts', 'Home delivery'] },
     bakery:      { tag: 'Bakery',      title: 'Fresh from the oven daily.', sub: 'Cakes, breads and treats for every occasion.', cta: 'Order now', services: ['Custom cakes', 'Fresh bread', 'Pastries', 'Party orders'] },
     clinic:      { tag: 'Healthcare',  title: 'Care you can trust.', sub: 'Doctors, services and easy appointment booking.', cta: 'Book appointment', services: ['General medicine', 'Consultations', 'Lab tests', 'Health packages'] },
     dental:      { tag: 'Dental',      title: 'Healthy smiles for life.', sub: 'Modern dental care with a gentle touch.', cta: 'Book a visit', services: ['Cleanings', 'Root canals', 'Braces', 'Whitening'] },
@@ -381,7 +384,7 @@
   function updateEstimate() {
     if (!estEl) return;
     var r = estimateRange();
-    estEl.textContent = inr(r[0]) + ' – ' + inr(r[1]);
+    estEl.textContent = inr(r[0]) + ' - ' + inr(r[1]);
   }
 
   /* ─── render preview ─── */
@@ -470,7 +473,7 @@
     var list = (window.PLANNER_THEMES && window.PLANNER_THEMES[catKey]) || [];
     if (!list.length) { themesEl.innerHTML = ''; return; }
     themesEl.innerHTML =
-      '<p class="pl-themes-title">Real free WordPress themes in this style — tap to explore</p>' +
+      '<p class="pl-themes-title">Real free WordPress themes in this style - tap to explore</p>' +
       '<div class="pl-themes-row">' +
       list.map(function (t) {
         return '<a class="pl-theme-card" href="' + esc(t.url) + '" target="_blank" rel="noopener">' +
@@ -555,7 +558,7 @@
         if (!photosEl) return;
         var n = photos.length;
         photoNoteEl.textContent = n
-          ? n + ' of ' + MAX_PHOTOS + ' photos added — showing in the preview. Photos never leave this device.'
+          ? n + ' of ' + MAX_PHOTOS + ' photos added - showing in the preview. Photos never leave this device.'
           : orig;
       }, 400);
     })();
@@ -564,8 +567,8 @@
   /* ─── WhatsApp lead capture ─── */
   var sendBtn = document.getElementById('pl-send');
   var contactEmail = document.getElementById('pl-contact-email');
-  /* Anjana's WhatsApp number (digits only, country code, no + or spaces) */
-  var WHATSAPP_NUMBER = '918547454062';
+  /* Anjana's WhatsApp number, shared with the contact form above */
+  var WHATSAPP_NUMBER = ANJANA_WHATSAPP;
 
   function planSummary() {
     var name = val(nameEl) || 'Your Business';
@@ -586,7 +589,7 @@
       hours: val(hoursEl),
       tagline: val(taglineEl),
       photos: photos.length,
-      budget: inr(r[0]) + ' – ' + inr(r[1]),
+      budget: inr(r[0]) + ' - ' + inr(r[1]),
       email: email
     };
   }
@@ -601,7 +604,7 @@
       var p = planSummary();
       var emailLine = p.email ? ('\nMy email: ' + p.email) : '';
       var text =
-        'Website plan request — ' + p.name + '\n\n' +
+        'Website plan request - ' + p.name + '\n\n' +
         'Business name: ' + p.name + '\n' +
         'Domain: ' + p.domain + '\n' +
         'Category: ' + p.category + '\n' +
@@ -787,7 +790,7 @@
         ['Template', tpl.charAt(0).toUpperCase() + tpl.slice(1)],
         ['Theme colour', colour],
         ['Pages', pages],
-        ['Estimated budget', inr(r[0]) + ' – ' + inr(r[1])]
+        ['Estimated budget', inr(r[0]) + ' - ' + inr(r[1])]
       ];
       function opt(el, label) { var v = el ? el.value.trim() : ''; if (v) rows.push([label, v]); }
       opt(taglineEl, 'Tagline');
@@ -799,7 +802,7 @@
       if (photoN) rows.push(['Photos', photoN + ' photo' + (photoN === 1 ? '' : 's') + ' included']);
       var body = rows.map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('');
       card.innerHTML =
-        '<h2>' + esc(name) + ' — Website plan</h2>' +
+        '<h2>' + esc(name) + ' - Website plan</h2>' +
         '<p class="pp-domain">' + esc(domain) + '</p>' +
         '<table>' + body + '</table>' +
         '<p class="pp-foot">Prepared with the Anjana DV website planner · ' + new Date().toLocaleDateString('en-IN') + '</p>';
