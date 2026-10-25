@@ -564,8 +564,8 @@
   /* ─── WhatsApp lead capture ─── */
   var sendBtn = document.getElementById('pl-send');
   var contactEmail = document.getElementById('pl-contact-email');
-  /* TODO: replace with Anjana's real WhatsApp number (digits only, country code, no + or spaces) */
-  var WHATSAPP_NUMBER = '919999999999';
+  /* Anjana's WhatsApp number (digits only, country code, no + or spaces) */
+  var WHATSAPP_NUMBER = '918547454062';
 
   function planSummary() {
     var name = val(nameEl) || 'Your Business';
